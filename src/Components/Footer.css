@@ -1,0 +1,41 @@
+#body-footer
+{
+    background-color: rgba(128, 0, 128, 0.911);
+    padding: 40px;
+}
+
+#footer-divider
+{
+    width: 100%;
+    
+    border: 2px solid;
+    border-color: rgb(253, 252, 252);
+
+    margin: 50px 0px;
+    
+    
+}
+
+#socials
+{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+#social-media
+{
+    color: white;
+
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid;
+    border-color: white;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

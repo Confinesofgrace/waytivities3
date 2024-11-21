@@ -1,0 +1,105 @@
+*
+{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a
+{
+  text-decoration: none;
+  color: black;
+}
+
+
+/* Make the affected page appear under the navbar 
+- 60px for height of Navbar
+*/
+#page-layout
+{
+    padding: 60px 50px;
+}
+
+#hero
+{
+  width: 100%;
+  height: 100vh;
+  background-image: url(/src/assets/Hero-footprint.jpg);/* find a way to blur this image- improve readability of text */
+  background-position: center;
+  background-size:cover;
+  background-repeat: no-repeat;
+  
+}
+
+      /* Hero Section */
+
+#hero
+{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(39, 2, 39, 0.336);
+
+  display: flex; 
+  align-items: center;
+}
+
+/*  Increase contrast for readability */
+#hero-overlay
+{
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+
+  padding: 70px 0px 20px 0px;
+  
+}
+
+
+#hero-content
+{
+  width: 50%;
+  padding: 0px 0px 0px 50px;
+  /*background-color: rgba(0, 0, 0, 0.041);*/
+  color: whitesmoke;
+
+  font-size: 20px;
+  font-weight: 500;
+  text-shadow: 0px 1px 30px rgba(12, 12, 12, 0.116);
+}
+
+#hero-content h3
+{
+  color: whitesmoke;
+  font-size: 90px;
+}
+
+#bible-verse
+{
+  font-size: 12px;
+}
+
+#hero-content p
+{
+  margin: 12px 0px ;
+}
+
+#hero-content button
+{
+  border-style: none;
+  border: 1px solid;
+  border-color: whitesmoke;
+  border-radius: 4px;
+
+  background-color: purple;
+  color: whitesmoke;
+
+  padding: 12px 72px;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  margin: 16px 0px;
+}
+
