@@ -6,7 +6,7 @@ function Hero () {
         <section id="hero">
             <div id="hero-overlay">
                 <div id="hero-content">
-                    <h3>His Footprints, <br/> are clearly seen!</h3>
+                    <h3 >His Footprints, <br/> are clearly seen!</h3>
 
                     <p id="bible-verse">Psalm 103 v 7, Psalm 95 v 10, Hebrews 3 v 10, Romans 1 v 20</p>
                 
