@@ -1,96 +1,109 @@
-import './Admin.css'
+import React, { useState, useEffect } from 'react';
+import { db } from '../../firebaseConfig';
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
-function Admin () {
-    return(
-        <div id="page-layout">
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import './Admin.css';
+import Library from '../../Components/Library';
 
-            <div id="admin-section" style={{display:'flex'}}>
+function Admin() {
+  const [books, setBooks] = useState([]);
+  const [newBook, setNewBook] = useState({
+    title: '',
+    frontCover: '',
+    spine: '',
+    backCover: '',
+    mockup: '',
+    aboutBook: '',
+    aboutAuthor: '',
+    trailer: '',
+  });
 
-                <div id='Admin-dashboard'>
-                    Admin Dashboard
-                </div>
-                <div id='work-pane'>
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
-                    <div id='banner'>
-                        Banner to represent each task
-                    </div>
+  const fetchBooks = async () => {
+    const querySnapshot = await getDocs(collection(db, 'books'));
+    const booksArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setBooks(booksArray);
+  };
 
-                    <div id='task-section'>
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewBook((prev) => ({ ...prev, [name]: value }));
+  };
 
-                        <div style={{marginBottom:'8px'}} >
+  const handleQuillChange = (name, value) => {
+    setNewBook((prev) => ({ ...prev, [name]: value }));
+  };
 
-                            <p className='subsection-header'>Choose Category</p>
+  const handleAddBook = async () => {
+    try {
+      console.log("Adding book:", newBook);
+      await addDoc(collection(db, 'books'), newBook);
+      console.log("Book added successfully!");
+      fetchBooks(); // Refresh books after adding
+      setNewBook({
+        title: '',
+        frontCover: '',
+        spine: '',
+        backCover: '',
+        mockup: '',
+        aboutBook: '',
+        aboutAuthor: '',
+        trailer: '',
+      });
+      alert('Book added successfully!');
+    } catch (error) {
+      console.error("Error adding book: ", error);
+    }
+  };
+  
 
-                            <div style={{display:'flex' , gap:'20px', alignItems:'center'}} >
-                                
-                                <input id='admin-input'  type='text' placeholder='Add New Category'/>
+  const handleDeleteBook = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'books', id));
+      fetchBooks(); // Refresh books after deletion
+    } catch (error) {
+      console.error("Error deleting book: ", error);
+    }
+  };
 
-                                <p>or</p>
-
-                                <button style={{padding:'16px', borderRadius:'16px', color:'white', backgroundColor:'black'}}>Select Category</button>
-                            </div>
-
-                        </div>
-
-                        
-                        <div>
-
-                            <p className='subsection-header'>Add Book</p>
-                            <div>
-                                <p className='addbook-header'>Book Title</p>
-                                <input id='admin-input' type='text' placeholder='Add Book Title'/>
-                            </div>
-                            
-                            <div id='book-covers'>
-                                <p className='addbook-header'>Add Book Cover</p>
-
-                                <div id='book-covers' style={{display:'flex', gap:'20px'}}>
-                                    <input id='admin-input' className='bookCover-input' type='text' placeholder='Add Front Cover'/>
-                                    <input id='admin-input' className='bookCover-input' type='text' placeholder='Add Spine'/>
-                                    <input id='admin-input' className='bookCover-input' type='text' placeholder='Add Back Cover'/>
-                                    <input id='admin-input' className='bookCover-input' type='text' placeholder='Add Mockup'/>
-                                </div>
-                            </div>
-                            
-
-                            <div id='book-dscription'>
-                                <p className='addbook-header'>Add Book Description</p>
-                                <div style={{display:'flex', gap:'20px'}}>
-                                    <div>
-
-                                        <input className='book-description' id='admin-input' type='text' placeholder='Add About Book'/>
-                                        </div>
-
-                                        <div>
-                                        <input className='book-description' id='admin-input' type='text' placeholder='Add About Author'/>
-                                    </div>
-                                </div>
-                                
-                                
-                                
-                                <div>
-                                    <input className='book-trailer' id='admin-input' type='text' placeholder='Add Book Trailer'/>
-                                </div>    
-                            </div>    
-
-                        </div>
-                        
-                        
-
-                    </div>
-
-
-                </div>
-                <div id='user-preview'>
-                    What the site looks like for a user
-                </div>
-
-
-
+  return (
+    <div id="page-layout">
+      <div id='admin-layout'>
+        <div id="admin-section" style={{ display: 'flex', width:'60%', paddingRight:'40px' }}>
+          <div id="work-pane">
+            <div id="task-section">
+              <p className="subsection-header">Add Book</p>
+              <input id="admin-input" type="text" name="title" placeholder="Book Title" value={newBook.title} onChange={handleChange} />
+              <div style={{ display: 'grid', gap: '20px', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                <input id="admin-input" type="text" name="frontCover" placeholder="Front Cover" value={newBook.frontCover} onChange={handleChange} />
+                <input id="admin-input" type="text" name="spine" placeholder="Spine" value={newBook.spine} onChange={handleChange} />
+                <input id="admin-input" type="text" name="backCover" placeholder="Back Cover" value={newBook.backCover} onChange={handleChange} />
+                <input id="admin-input" type="text" name="mockup" placeholder="Mockup" value={newBook.mockup} onChange={handleChange} />
+              </div>
+              <p className="addbook-header">About Author</p>
+              <ReactQuill theme="snow" value={newBook.aboutAuthor} onChange={(value) => handleQuillChange('aboutAuthor', value)} />
+              <p className="addbook-header">About Book</p>
+              <ReactQuill theme="snow" value={newBook.aboutBook} onChange={(value) => handleQuillChange('aboutBook', value)} />
+              <p className="addbook-header">Book Trailer</p>
+              <ReactQuill theme="snow" value={newBook.trailer} onChange={(value) => handleQuillChange('trailer', value)} />
+              <button style={{ padding: '10px 20px', marginTop: '20px' }} onClick={handleAddBook}>
+                Add Book
+              </button>
             </div>
-
+          </div>
         </div>
-    );
+
+        <div id='Library'>
+          <Library books={books} onDelete={handleDeleteBook} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Admin;

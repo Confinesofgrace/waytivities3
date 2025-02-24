@@ -1,32 +1,22 @@
 #Admin-dashboard
 {
-    background-color: gray;
+    /*background-color: rgb(243, 243, 243);*/
+    color: rgb(133, 133, 133);
     width: 20%;
     height: 600px;
 }
 
+#admin-layout
+{
+    
+    display: flex;
+}
+
 #work-pane
 {
-    width: 60%;
     
-}
-
-#banner
-{
     width: 100%;
-    height: 120px;
     
-    background: linear-gradient(to right, rgb(61, 118, 243), white );
-}
-
-#user-preview
-{
-    
-    height: 30px;
-    background-color: aqua;
-    position: absolute;
-
-    right: 10px;
 }
 
 #admin-input
@@ -37,6 +27,21 @@
     border-radius: 16px;
 
     padding: 16px;
+
+}
+
+#admin-input2
+{
+    border-style: none;
+    border: 1px solid;
+    border-color: purple;
+    border-radius: 16px;
+
+    padding: 16px;
+
+    width:100% ;
+    height: 200px;
+
 }
 
 .bookCover-input
@@ -57,15 +62,5 @@
     margin: 8px 0px;
 }
 
-.book-description
-{
-    width: 425px;
-    height: 300px;
-}
 
-.book-trailer
-{
-    width: 870px;
-    height: 300px;
-    margin-top: 16px;
-}
+
