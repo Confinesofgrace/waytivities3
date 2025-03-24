@@ -50,22 +50,35 @@
     width: 200px;
     height: 300px;
     padding: 8px;
-    border: 1px solid;
     border-radius: 4px;
     box-shadow: 2px 2px 4px rgba(8, 8, 8, 0.158);
     background-color: rgb(249, 250, 249);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     flex-shrink: 0; /* Prevents shrinking in flexbox */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
 }
 
-#Book5
+.preview-book-title 
 {
-    background-image: url(../assets/Book4.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background: rgba(255, 255, 255, 0.671);
+    color: rgb(5, 5, 5);
+    font-size: 14px;
+
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-weight: medium;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
+
 
 .book-cover img 
 {
@@ -80,6 +93,7 @@
 {
     margin: 0;
 }
+
 
 .book-cover:hover 
 {

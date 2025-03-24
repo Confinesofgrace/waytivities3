@@ -11,17 +11,28 @@ const Library = ({ books, onDelete }) => {
         ) : (
           books.map((book) => (
             <div key={book.id} id="book-holder">
-
-              <img src={book.frontCover} alt={book.title} id="libraryBook-cover" />
-
-              <h5 id="libraryBook-title">{book.title}</h5>
-
-              <div id="book-actions" style={{backgroundColor:'blue',
-                display: 'flex',
-                alignItems:'center',
-                justifyContent:'space-around',
-                
-              }}>
+              
+              <div 
+                id='for-image' 
+                style={{
+                  backgroundImage: book.frontCover ? `url(${book.frontCover})` : "none",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '12px',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  backgroundColor: book.frontCover ? 'transparent' : 'rgba(255, 255, 255, 0.7)', // Dark background if no image
+                }} 
+              >
+                {!book.frontCover && <p>{book.title}</p>}  
+              </div>
+              
+              <div id="book-actions">
                 <button className="edit-btn">Edit</button>
                 <button className="delete-btn" onClick={() => onDelete(book.id)}>Delete</button>
               </div>

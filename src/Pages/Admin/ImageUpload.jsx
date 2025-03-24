@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-const ImageUpload = ({ onUpload }) => {
+const ImageUpload = ({ label, onUpload }) => {
   const fileInputRef = useRef(null);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -14,7 +14,7 @@ const ImageUpload = ({ onUpload }) => {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "Book covers"); // Get this from Cloudinary
+    formData.append("upload_preset", "Book covers"); // Your Cloudinary upload preset
 
     try {
       const response = await fetch(
@@ -36,14 +36,14 @@ const ImageUpload = ({ onUpload }) => {
 
   return (
     <div>
-      <p className="addbook-header">Add Book Cover</p>
+      <p className="addbook-header">{label}</p>
       <div
         className="image-upload-container"
         onClick={() => fileInputRef.current?.click()}
         style={{
           width: "150px",
           height: "200px",
-          border: "2px dashed purple",
+          border: "1px solid purple",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -57,6 +57,7 @@ const ImageUpload = ({ onUpload }) => {
       >
         {uploading ? "Uploading..." : !preview ? "Click to Upload" : ""}
       </div>
+
       <input
         type="file"
         ref={fileInputRef}
