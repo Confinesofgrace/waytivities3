@@ -1,5 +1,5 @@
 import './Books.css';
-import BookListsPreview from "../../Components/BookListsPreview";
+import BookPreview2 from "../../Components/BookPreview2";
 import { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
@@ -64,7 +64,7 @@ function Books() {
                     )}
                 </div>
                 <div id='booklists'>
-                    <BookListsPreview/>
+                    <BookPreview2/>
                 </div>
             </div>
         </div>
