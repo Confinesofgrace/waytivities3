@@ -1,24 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { db } from '../firebaseConfig'; 
-import { collection, getDocs } from 'firebase/firestore';
+import { useRef } from 'react';
 import './BookPreview.css';
 
-function BookPreview2() {
-    const [books, setBooks] = useState([]);
+function BookPreview2({ books, onBookClick }) {
     const scrollContainer1 = useRef(null);
     const scrollContainer2 = useRef(null);
-
-    useEffect(() => {
-        const fetchBooks = async () => {
-            const booksCollection = collection(db, 'books');
-            const booksSnapshot = await getDocs(booksCollection);
-            const booksList = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setBooks(booksList);
-        };
-
-        fetchBooks();
-    }, []);
 
     const scrollLeft = (ref) => {
         ref.current.scrollBy({ left: -200, behavior: 'smooth' });
@@ -30,14 +15,9 @@ function BookPreview2() {
 
     return (
         <div id="body-bookPreview2">
-            
-
             {/* New Releases */}
             <div className="category-section">
-                <h3 style={{ marginBottom: '10px',
-                marginTop:'85px'
-                    
-                 }}>New Releases</h3>
+                <h3 style={{ marginBottom: '10px', marginTop:'85px' }}>New Releases</h3>
                 <div className="scroll-buttons">
                     <button className="scroll-btn" onClick={() => scrollLeft(scrollContainer1)}>‹</button>
                 </div>
@@ -48,6 +28,7 @@ function BookPreview2() {
                                 key={book.id} 
                                 className="book-cover"
                                 style={{ backgroundImage: `url(${book.frontCover})` }}
+                                onClick={() => onBookClick(book)} // Handle book click
                             >
                                 <p className="preview-book-title">{book.title}</p>
                             </div>
@@ -72,6 +53,7 @@ function BookPreview2() {
                                 key={book.id} 
                                 className="book-cover"
                                 style={{ backgroundImage: `url(${book.frontCover})` }}
+                                onClick={() => onBookClick(book)} // Handle book click
                             >
                                 <p className="preview-book-title">{book.title}</p>
                             </div>

@@ -78,13 +78,25 @@
 }
 
 
-#book-trailer
-{
-    padding: 20px;
-    margin: 0px auto;
-
+#book-trailer-container {
     width: 50%;
+    height: 500px; /* Set a fixed height */
+
+    margin-left: 10%;
+
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Add a border for visibility */
+    border-style: none;
+    padding: 10px;
+    background: #f8f8f863; /* Light background for contrast */
 }
+
+#book-trailer {
+    padding: 10px;
+}
+
+
+
 
 #booklists
 {

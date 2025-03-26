@@ -43,13 +43,9 @@ function BookPreview() {
                 <div className="scroll-container" ref={scrollContainer1}>
                     <div className="preview">
                         {books.map((book) => (
-                            <div 
-                                key={book.id} 
-                                className="book-cover"
-                                style={{ backgroundImage: `url(${book.frontCover})` }}
-                            >
+                            <Link key={book.id} to={`/books/${book.id}`} className="book-cover" style={{ backgroundImage: `url(${book.frontCover})` }}>
                                 <p className="preview-book-title">{book.title}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
