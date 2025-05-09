@@ -20,16 +20,6 @@ a
     padding: 60px 50px;
 }
 
-#hero
-{
-  width: 100%;
-  height: 100vh;
-  background-image: url(/src/assets/Hero-footprint.jpg);/* find a way to blur this image- improve readability of text */
-  background-position: center;
-  background-size:cover;
-  background-repeat: no-repeat;
-  
-}
 
       /* Hero Section */
 
@@ -38,6 +28,11 @@ a
   width: 100%;
   height: 100%;
   background-color: rgba(39, 2, 39, 0.336);
+
+  background-image: url(/src/assets/Hero-footprint.jpg);/* find a way to blur this image- improve readability of text */
+  background-position: center;
+  background-size:cover;
+  background-repeat: no-repeat;
 
   display: flex; 
   align-items: center;
@@ -57,13 +52,13 @@ a
 
 #hero-content
 {
-  width: 50%;
+  width: 1000px;
   padding: 0px 0px 0px 50px;
   /*background-color: rgba(0, 0, 0, 0.041);*/
   color: whitesmoke;
 
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
   text-shadow: 0px 1px 30px rgba(12, 12, 12, 0.116);
 }
 
@@ -105,22 +100,23 @@ a
 
 
 
+
 /* Responsive tweaks */
 @media screen and (max-width: 768px) {
   #hero {
     flex-direction: column;
     height: auto;
-    padding: 40px 20px;
+    padding: 40px 0px;
     justify-content: center;
     text-align: center;
   }
 
   #hero-overlay {
-    padding: 40px 0;
+    padding: 40px 0px;
   }
 
   #hero-content {
-    width: 90%;
+    width: 100%;
     padding: 0;
     font-size: 16px;
   }

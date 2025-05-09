@@ -11,9 +11,9 @@ function Hero () {
                     <p id="bible-verse">Psalm 103 v 7, Psalm 95 v 10, Hebrews 3 v 10, Romans 1 v 20</p>
                 
 
-                    <p>It is a myth to think God obfuscates himself. In 'truth' his invisible attributes are painted and displayed clearly by creation.</p>
+                    <p>It is a myth to think God obfuscates himself. In 'truth' his invisible attributes <br/>are clearly painted by creation.</p>
                     <p>
-                    If only we'd dared to listen, we'd hear him sing, and if we dare to follow, we'd see his footprints in uncharted territories. <br/>
+                    If only we'd dared to listen, we'd hear him sing, and if we dare to follow, <br/>we'd see his footprints in uncharted territories. <br/>
                     But it is a journey- a Journey of Faith... Are you ready?</p>
                     
 
