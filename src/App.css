@@ -103,3 +103,39 @@ a
   margin: 16px 0px;
 }
 
+
+
+/* Responsive tweaks */
+@media screen and (max-width: 768px) {
+  #hero {
+    flex-direction: column;
+    height: auto;
+    padding: 40px 20px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #hero-overlay {
+    padding: 40px 0;
+  }
+
+  #hero-content {
+    width: 90%;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  #hero-content h3 {
+    font-size: 36px;
+  }
+
+  #hero-content button {
+    padding: 10px 40px;
+    font-size: 16px;
+  }
+
+  #bible-verse {
+    font-size: 10px;
+  }
+}
+
