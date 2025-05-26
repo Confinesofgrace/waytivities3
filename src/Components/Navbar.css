@@ -87,3 +87,29 @@ nav
     visibility: visible;
     opacity: .5;
 }
+
+@media screen and (max-width: 900px) {
+  #nav-center,
+  #nav-right > :not(#hamburger-box) {
+    display: none; /* Hide nav links, search, and buttons */
+  }
+
+  #hamburger-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  #hamburger-box hr {
+    width: 25px;
+    border: 1px solid black;
+    margin: 0;
+  }
+
+  nav {
+    padding: 0 20px;
+    justify-content: space-between;
+  }
+}
+
