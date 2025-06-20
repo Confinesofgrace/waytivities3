@@ -20,11 +20,21 @@ nav
 
 #nav-center 
 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
 }
+
+@media screen and (max-width: 900px) {
+  #nav-center {
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: flex-start;
+    gap: 0; /* remove horizontal spacing */
+  }
+}
+
 
 #navs 
 {
@@ -112,4 +122,76 @@ nav
     justify-content: space-between;
   }
 }
+
+
+
+@media screen and (max-width: 900px) {
+  #nav-center {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: rgba(248, 246, 246, 0.97);
+    padding: 10px 20px 20px 20px;
+
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #nav-center.mobile-show {
+    transform: translateX(0);
+  }
+
+  @media screen and (max-width: 900px) {
+  #navs {
+    margin-bottom: 10px; /* reduce vertical spacing */
+  }
+
+  #nav-center {
+    gap: 0; /* remove horizontal gap */
+  }
+}
+
+
+.backdrop {
+  position: fixed;
+  top: 60px; /* same as navbar height */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background-color: rgba(0, 0, 0, 0.3); /* semi-transparent */
+  backdrop-filter: blur(5px); /* the blur effect */
+  z-index: 998; /* behind the mobile menu, which is 999 */
+}
+
+}
+
+/* Mobile login/signup styling */
+@media screen and (max-width: 900px) {
+  .mobile-auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .mobile-auth-buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+  }
+}
+
+
+
 

@@ -44,6 +44,7 @@ a
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
+  
 
   padding: 70px 0px 20px 0px;
   
@@ -104,19 +105,19 @@ a
 
 
 
-
-
 /* Responsive tweaks */
 @media screen and (max-width: 768px) {
-  #hero {
+  #hero 
+  {
     flex-direction: column;
     height: auto;
-    padding: 40px 0px;
+    padding: 40px 0px 0px 0px;
     justify-content: center;
-    text-align: center;
+    
   }
 
-  #hero-overlay {
+  #hero-overlay 
+  {
     padding: 40px 0px;
     
   }

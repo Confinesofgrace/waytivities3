@@ -13,12 +13,9 @@ function SignUp () {
                     <hr style={{width:'100%', border:'1px solid', borderColor:'black', margin:'16px 0px'}}/>
 
                     
-                    <div style={{
-                        display:'flex',
-                        alignItems:'center',
-                        }}>
+                    <div id='signup-options'>
                         
-                        <div style={{width:'45%',marginRight:'auto', display:'flex', flexDirection:'column'}}>
+                        <div id='signup-email' >
                             Sign up with Email
                             
                             <input id='signup-input' placeholder='Email'/>
@@ -36,10 +33,11 @@ function SignUp () {
                             ><Link style={{color:'white'}}>Create account</Link></button>
                         </div>
 
-                        <p>or</p>
+                        <div id='or-divider'> <p>or</p> </div>
+                        
                         
 
-                        <div style={{width:'45%', marginLeft:'auto'}}>
+                        <div id='signup-alternative' >
                             
                             <div id='signup-with'>Sign up with Google</div>
                             <div id='signup-with'>Sign up with Facebook</div>
