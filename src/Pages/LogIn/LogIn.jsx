@@ -1,29 +1,26 @@
 import { Link } from 'react-router-dom';
-//import './LogIn.css'
+import './LogIn.css'
 
 function LogIn () {
     return (
         <div id='page-layout'>
 
-        <div id='signup-modal'>
-            <div id='signup-content'>
-                <h3>Waytivities</h3>
-                <p>Continue to your Waytivities account</p>
+            <div id='login-modal'>
+                <div id='login-content'>
+                    <h3>Waytivities</h3>
+                    <p>Continue to your waytivities account</p>
 
-                <hr style={{width:'100%', border:'1px solid', borderColor:'black', margin:'16px 0px'}}/>
+                    <hr style={{width:'100%', border:'1px solid', borderColor:'black', margin:'16px 0px'}}/>
 
-                
-                <div style={{
-                    display:'flex',
-                    alignItems:'center',
-                    }}>
                     
-                    <div style={{width:'45%',marginRight:'auto', display:'flex', flexDirection:'column'}}>
+                    <div id='login-options'>
+                    
+                    <div id='login-email'>
                         Log In with Email
                         
-                        <input id='signup-input' placeholder='Email'/>
-                        <input id='signup-input' placeholder='Password'/>
-                        <input id='signup-input' placeholder='Confirm Password'/>
+                        <input id='login-input' placeholder='Email'/>
+                        <input id='login-input' placeholder='Password'/>
+                        <input id='login-input' placeholder='Confirm Password'/>
                         <button
                         style={{padding:'8px 16px',
                             margin:'8px 0px',
@@ -33,41 +30,42 @@ function LogIn () {
                             backgroundColor:'black',
                             
                         }}
-                        ><Link style={{color:'white'}}>Create account</Link></button>
+                        ><Link style={{color:'white'}}>Log In</Link></button>
 
                         <p style={{fontSize:'12px'}}>Forgot password?</p>
                     </div>
 
-                    <p>or</p>
-                    
+                    <div id='or-divider'>
+                        <p>or</p>
+                    </div>
 
-                    <div 
-                    style={{
-                        width:'45%', 
-                        marginLeft:'auto'
-                        }}>
+
+                    <div id='login-alternative'>
                         
-                        <div id='signup-with'>Log In with Google</div>
-                        <div id='signup-with'>Log In with Facebook</div>
+                        <div id='login-with'>Log In with Google</div>
+                        <div id='login-with'>Log In with Facebook</div>
                     </div>
                     
 
                     
+                    </div>
+                    
+                    
+                                    
+                    
                 </div>
-                                   
+
+                <p>Don't have an account? <span><Link to= 'signup' 
+                    style={{
+                        fontWeight:'600', 
+                        color: 'purple', 
+                        cursor:'pointer',
+
+                    }}>Sign Up</Link></span></p>
                 
             </div>
-            <p>Don't have an account? <span><Link to= 'signup' 
-                style={{
-                    fontWeight:'600', 
-                    color: 'purple', 
-                    cursor:'pointer',
-
-                }}>Sign Up</Link></span></p>
-            
-        </div>
         
-    </div>
+        </div>
     );
 }
 

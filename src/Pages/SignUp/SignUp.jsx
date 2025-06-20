@@ -8,7 +8,7 @@ function SignUp () {
             <div id='signup-modal'>
                 <div id='signup-content'>
                     <h3>Waytivities</h3>
-                    <p>Create your Waytivities account</p>
+                    <p>Create your waytivities account</p>
 
                     <hr style={{width:'100%', border:'1px solid', borderColor:'black', margin:'16px 0px'}}/>
 

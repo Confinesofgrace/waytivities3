@@ -21,7 +21,15 @@
     padding: 16px;
 
     border-radius: 16px;
+    
+}
 
+#signup-options
+{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 20px;
     
 }
 
@@ -70,14 +78,7 @@
     
 }
 
-#signup-options
-{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-    gap: 20px;
-    
-}
+
 
 
 @media screen and (max-width: 900px)
