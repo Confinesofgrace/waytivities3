@@ -7,10 +7,16 @@ function SignUp () {
 
             <div id='signup-modal'>
                 <div id='signup-content'>
-                    <h3>Waytivities</h3>
-                    <p>Create your waytivities account</p>
 
-                    <hr style={{width:'100%', border:'1px solid', borderColor:'black', margin:'16px 0px'}}/>
+                    <div id='signup-header' >
+
+                        <h3>Waytivities</h3>
+                        <p>Create your waytivities account</p>
+
+                        <hr/>
+
+                    </div>
+                    
 
                     
                     <div id='signup-options'>
@@ -33,7 +39,9 @@ function SignUp () {
                             ><Link style={{color:'white'}}>Create account</Link></button>
                         </div>
 
-                        <div id='or-divider'> <p>or</p> </div>
+                        <div id='or-divider'> 
+                            <p>or</p> 
+                        </div>
                         
                         
 
@@ -43,13 +51,16 @@ function SignUp () {
                             <div id='signup-with'>Sign up with Facebook</div>
                         </div>
                         
-
                         
                     </div>
                                        
                     
                 </div>
-                <p>Already have an account? <span><Link to= 'login' style={{fontWeight:'600', color: 'purple', cursor:'pointer',}}>Log In</Link></span></p>
+
+                <div id='have-account' >
+                    <p>Already have an account? <span><Link to= 'login' style={{fontWeight:'600', color: 'purple', cursor:'pointer',}}>Log In</Link></span></p>
+                </div>
+                
                 
             </div>
             

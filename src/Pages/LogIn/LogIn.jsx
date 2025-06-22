@@ -51,10 +51,8 @@ function LogIn () {
                             <div id='login-with'>Log In with Facebook</div>
                         </div>
                     
-
                     
                     </div>
-                    
                     
                                     
                     

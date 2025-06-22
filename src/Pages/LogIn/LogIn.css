@@ -16,7 +16,7 @@
     /* x, y, blur, color */
     box-shadow: 2px 2px 100px rgba(0, 0, 0, 0.205);
 
-    padding: 16px;
+    padding: 32px;
 
     border-radius: 16px;
 
@@ -113,12 +113,6 @@
     #login-content
     {
         width: 100%;
-        /* x, y, blur, color */
-        box-shadow: 2px 2px 100px rgba(0, 0, 0, 0.205);
-
-        padding: 16px;
-
-        border-radius: 16px;
 
     }
 
