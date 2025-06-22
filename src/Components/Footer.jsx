@@ -15,7 +15,7 @@ function Footer () {
                     <h4>
                         Waytivities
                     </h4>
-                        His Footprints are Cleraly Seen
+                        His Footprints are Clearly Seen
                     </p>
                 </div>
                 <div style={{display:'flex', gap:'50px'}}>
