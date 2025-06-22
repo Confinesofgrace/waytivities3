@@ -58,7 +58,7 @@ function SignUp () {
                 </div>
 
                 <div id='have-account' >
-                    <p>Already have an account? <span><Link to= 'login' style={{fontWeight:'600', color: 'purple', cursor:'pointer',}}>Log In</Link></span></p>
+                    <p>Already have an account? <span><Link to= '/login' style={{fontWeight:'600', color: 'purple', cursor:'pointer',}}>Log In</Link></span></p>
                 </div>
                 
                 

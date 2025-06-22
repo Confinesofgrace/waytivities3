@@ -59,7 +59,7 @@ function LogIn () {
                 </div>
 
                 <div id='new-user' >
-                    <p>Don't have an account? <span><Link to= 'signup' 
+                    <p>Don't have an account? <span><Link to= '/signup' 
                     style={{
                         fontWeight:'600', 
                         color: 'purple', 
