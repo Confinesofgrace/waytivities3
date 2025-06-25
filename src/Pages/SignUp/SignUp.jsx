@@ -27,16 +27,7 @@ function SignUp () {
                             <input id='signup-input' placeholder='Email'/>
                             <input id='signup-input' placeholder='Password'/>
                             <input id='signup-input' placeholder='Confirm Password'/>
-                            <button
-                            style={{padding:'8px 16px',
-                                margin:'8px 0px',
-                                borderStyle:'none',
-                                border:'1px solid',
-                                borderRadius:'4px',
-                                backgroundColor:'black',
-                                
-                            }}
-                            ><Link style={{color:'white'}}>Create account</Link></button>
+                            <button><Link style={{color:'white'}}>Create account</Link></button>
                         </div>
 
                         <div id='or-divider'> 

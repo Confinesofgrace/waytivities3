@@ -10,7 +10,7 @@ function LogIn () {
 
                     <div id='login-header'>
                         <h3>Waytivities</h3>
-                        <p>Continue to your waytivities account</p>
+                        <p>Log into your account</p>
 
                         <hr/>
 
@@ -25,17 +25,8 @@ function LogIn () {
                             
                             <input id='login-input' placeholder='Email'/>
                             <input id='login-input' placeholder='Password'/>
-                            <input id='login-input' placeholder='Confirm Password'/>
-                            <button
-                            style={{padding:'8px 16px',
-                                margin:'8px 0px',
-                                borderStyle:'none',
-                                border:'1px solid',
-                                borderRadius:'4px',
-                                backgroundColor:'black',
-                                
-                            }}
-                            ><Link style={{color:'white'}}>Log In</Link></button>
+                            
+                            <button><Link style={{color:'white'}}>Log In</Link></button>
 
                             <p style={{fontSize:'10px'}}>Forgot password?</p>
                         </div>

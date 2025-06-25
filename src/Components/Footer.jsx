@@ -3,22 +3,27 @@ import './Footer.css'
 import { SiInstagram, SiWhatsapp } from 'react-icons/si';
 import { PiCopyright } from 'react-icons/pi';
 
+import { Link } from 'react-router-dom';
+
 function Footer () {
     return (
         <div id='body-footer'>
 
-            <div style={{display:'flex', color:'white', gap:'120px', alignItems:'center'}}>
+            <div id='footer-line'>
 
-                <div>
+                <div id='footer-header' >
                     
                     <p>
-                    <h4>
-                        Waytivities
-                    </h4>
+                        <h4>
+                            Waytivities
+                        </h4>
                         His Footprints are Clearly Seen
                     </p>
+                    
+                    
                 </div>
-                <div style={{display:'flex', gap:'50px'}}>
+
+                <div  id='footer-nav'>
                     
                     <p>
                         Books

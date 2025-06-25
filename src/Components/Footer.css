@@ -4,6 +4,31 @@
     padding: 40px;
 }
 
+#footer-header h4
+{
+    cursor: pointer;
+}
+
+#footer-line
+{
+    display: flex;
+    color: white;
+   
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 8px;
+}
+
+#footer-nav
+{
+    width: 50%;
+    
+    display: flex;
+    justify-content: flex-end;
+    gap: 50px;
+}
+
 #footer-divider
 {
     width: 100%;
@@ -38,4 +63,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 900px)
+{
+    
+
+    #footer-nav
+    {
+        gap: 10px;
+    }
 }

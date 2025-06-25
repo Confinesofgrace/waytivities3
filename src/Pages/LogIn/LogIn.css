@@ -15,11 +15,8 @@
     width: 70%;
     /* x, y, blur, color */
     box-shadow: 2px 2px 100px rgba(0, 0, 0, 0.205);
-
     padding: 32px;
-
     border-radius: 16px;
-
 }
 
 #login-header p
@@ -47,8 +44,6 @@
 #login-email
 {
     width: 45%;
-    margin-right: auto;
-
     display: flex;
     flex-direction:column;
 }
@@ -56,8 +51,6 @@
 #login-alternative
 {
     width:45%;
-    margin-left: auto;
-
 }
 
 /* Buttons for alternatives */
@@ -75,6 +68,12 @@
     justify-content: center;
 
     font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#login-with:hover 
+{
+    background-color: #f0f0f0;
 }
 
 #login-input
@@ -85,8 +84,18 @@
     
     border: 1px solid;
     border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0);
-    
+    background-color: rgba(255, 255, 255, 0); 
+}
+
+#login-email button 
+{
+    background-color: black;
+    color: white;
+    padding: 8px 16px;
+    margin: 8px 0px;
+    border: 1px solid;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 #new-user
@@ -105,15 +114,18 @@
     {
         width: 100%;
         height: 85vh;
-
-        justify-content: flex-start;
-        
+        justify-content: flex-start; 
     }
 
     #login-content
     {
         width: 100%;
+        padding: 16px;
+    }
 
+    #login-header p
+    {
+        font-size: 12px;
     }
 
     #login-header hr
@@ -123,28 +135,39 @@
 
     #login-options
     {
-        display: flex;
         flex-direction: column;
         gap: 4px;
     }
 
-    #login-email
+    #login-email, #login-alternative
     {
-        margin-right:0px;
         width: 100%;
-        
-    }
-
-    #login-alternative
-    {
-        width:100%;
-        margin-left: 0;
-        
+        margin-top:12px;        
     }
 
     #or-divider
     {
         font-size: 14px;
+        margin: 8px 0;
+    }
+
+    #login-alternative
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 16px;
+        background-color:blue;
+    }
+
+    #login-with
+    {
+        margin: 0px;
+    }
+
+      #login-input, #login-email button, #login-with 
+    {
+        width: 100%;
     }
 
     
