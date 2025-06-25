@@ -12,15 +12,14 @@ function Footer () {
             <div id='footer-line'>
 
                 <div id='footer-header' >
-                    
+                    <h4>
+                        Waytivities
+                    </h4>
+
                     <p>
-                        <h4>
-                            Waytivities
-                        </h4>
                         His Footprints are Clearly Seen
                     </p>
-                    
-                    
+                      
                 </div>
 
                 <div  id='footer-nav'>
@@ -41,6 +40,7 @@ function Footer () {
             <div id='footer-divider'></div>
 
             <div id='socials'>
+
                 <div id='social-media'>
                     <TiSocialFacebook/>
                 </div>
@@ -50,11 +50,12 @@ function Footer () {
                 <div id='social-media'>
                     <SiWhatsapp/>
                 </div>
-                
 
             </div>
 
-            <div style={{width:'100%',display:'flex', color:'white', alignItems:'center', gap:'5px', justifyContent:'center'}}>
+            <div style={{width:'100%',display:'flex', color:'white', alignItems:'center', gap:'5px', justifyContent:'center',
+            fontSize:'14px',
+            }}>
                 
                 <PiCopyright/>
 
