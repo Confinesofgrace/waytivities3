@@ -3,6 +3,8 @@ import { BsSearch } from "react-icons/bs";
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
+import Logo from '../assets/Waytivities-Logo/logo.png';
+
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -14,7 +16,27 @@ function Navbar() {
             <nav>
                 <div id="nav-left">
                     <NavLink to='/' onClick={closeMenu}>
-                        <p>Waytivities</p>
+
+                        <div style={{display:'flex',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            gap:'10px'
+                        }}>
+
+                            <div style={{
+                                width:'50px',
+                                height: '50px',
+                            }} >
+                            <img src={Logo} alt='Waytivities Logo' style={{
+                                width:'100%',
+                                height:'100%',
+                                objectFit:'scale-down'}} />
+                            </div>
+
+                            <p>Waytivities</p>
+
+                        </div>
+                        
                     </NavLink>
                 </div>
 
