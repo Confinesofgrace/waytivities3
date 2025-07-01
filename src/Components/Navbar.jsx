@@ -69,6 +69,14 @@ function Navbar() {
                         </NavLink>
                     </div>
 
+                    <div id="navs">
+                        <NavLink to='/adminpage' activeclassname="active" onClick={closeMenu}>
+                        AdminPage
+                        <hr id='tab-hr'/>
+                        </NavLink>
+                    </div>
+
+
                         {/* Show login/signup buttons only when mobile menu is open */}
                         {isMenuOpen && (
                             <div className="mobile-auth-buttons">

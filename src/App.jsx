@@ -8,6 +8,7 @@ import LogIn from './Pages/LogIn/LogIn';
 import Navbar from './Components/Navbar';
 import Admin from './Pages/Admin/Admin';
 import { BookProvider } from './Pages/BookContext/BookContext'; // Import BookProvider
+import AdminPage from './Pages/Admin/AdminPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/books/:bookId" element={<Books />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/adminpage" element={<AdminPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
           </Routes>
