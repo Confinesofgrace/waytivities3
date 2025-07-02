@@ -4,26 +4,42 @@ import './AdminPage.css';
 function AdminPage() {
     return(
         <div id="page-layout">
-            <div id='for-title'>
-                
-                <input id='for-admin-input' type='text' name='title' placeholder='Book Title'  />
 
-                <input id='for-admin-input' type='text' name='author' placeholder='Author'  />
+            <div id='adminPage-layout'>
 
+                <div style={{display:'flex', justifyContent:'space-between', gap:'50px', paddingTop:'32px',
+                }} >
+                    <div className="admin-section" id='for-title'>
 
+                        <label htmlFor="book-title">Book Title</label>
+                        
+                        <input id='for-admin-input' type='text' name='title' placeholder='Book Title'  />
 
-            </div>
+                        <label htmlFor="author">Author</label>
+                        <input id='for-admin-input' type='text' name='author' placeholder='Author'  />                    
+
+                    </div>
             
-            <div id='for-cover'>
+                    <div className="admin-section" id='for-cover'>
+                        <label htmlFor="cover">Front Cover</label>
+                        <input id='for-admin-input2' type='text' name='cover' placeholder='Upload image (jpg/png)'  />
+                    </div>
+
+                    <div className="admin-section" id='for-aboutBook'>
+                        <label htmlFor="about">About Book</label>
+                        <input id='for-admin-input2' type='text' name='about' placeholder='Upload text file(doc/pdf)'  />
+                    </div>
+
+                    <div className="admin-section" id='for-intro'>
+                        <label htmlFor="trailer">Book Trailer</label>
+                        <input id='for-admin-input2' type='text' name='trailer' placeholder='Upload text file(doc/pdf)'  />
+                    </div>
+                </div>
 
             </div>
-            <div id='for-aboutBook'>
 
-            </div>
-            <div id='for-intro'>
-
-            </div>
             
+
             
         </div>
     );
