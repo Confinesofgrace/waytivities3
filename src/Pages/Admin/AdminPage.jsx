@@ -7,8 +7,7 @@ function AdminPage() {
 
             <div id='adminPage-layout'>
 
-                <div style={{display:'flex', justifyContent:'space-between', gap:'50px', paddingTop:'32px',
-                }} >
+                <div id='book-upload'>
                     <div className="admin-section" id='for-title'>
 
                         <label htmlFor="book-title">Book Title</label>

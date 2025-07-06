@@ -33,7 +33,8 @@ function Navbar() {
                                 objectFit:'scale-down'}} />
                             </div>
 
-                            <p>Waytivities</p>
+                            {/* <p>Waytivities</p> */}
+
 
                         </div>
                         
