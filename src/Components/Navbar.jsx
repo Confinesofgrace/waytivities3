@@ -17,11 +17,7 @@ function Navbar() {
                 <div id="nav-left">
                     <NavLink to='/' onClick={closeMenu}>
 
-                        <div style={{display:'flex',
-                            alignItems:'center',
-                            justifyContent:'space-between',
-                            gap:'10px'
-                        }}>
+                        <div>
 
                             <div style={{
                                 width:'50px',

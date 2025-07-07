@@ -44,7 +44,6 @@ a
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
-  
 
   padding: 70px 0px 20px 0px;
   
@@ -55,7 +54,7 @@ a
 {
     width: 100%;
     max-width: 1300px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 0px 30px; /* Gives some breathing space on smaller screens */
     color: whitesmoke;
   
@@ -118,41 +117,49 @@ a
 
   #hero-overlay 
   {
+    backdrop-filter: blur(2px);
     padding: 40px 0px;
-    
   }
 
-  #hero-content {
+  #hero-content 
+  {
     width: 100%;
-    padding: 0;
     font-size: 16px;
   }
 
-  #hero-content h3 {
+  #hero-content h3 
+  {
     font-size: 36px;
   }
 
-  #hero-content button {
+  #hero-content button 
+  {
     padding: 10px 40px;
     font-size: 16px;
   }
 
-  #bible-verse {
+  #bible-verse 
+  {
     font-size: 10px;
   }
 }
 
 
 @media screen and (max-width: 480px) {
-  #hero-content h3 {
+  #hero-content h3 
+  {
     font-size: 28px;
   }
 
+  /*
   #hero-content {
     padding: 0 16px;
   }
 
-  #hero-content button {
+  */
+  
+  #hero-content button 
+  {
     padding: 10px 30px;
     font-size: 14px;
   }
