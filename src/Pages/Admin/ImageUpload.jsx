@@ -1,20 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 const ImageUpload = ({ label, onUpload }) => {
-  const fileInputRef = useRef(null);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
+  const onDrop = useCallback(async (acceptedFiles) => {
+    const file = acceptedFiles[0];
     if (!file) return;
 
-    setPreview(URL.createObjectURL(file)); // Preview image before upload
+    setPreview(URL.createObjectURL(file)); // preview before upload
     setUploading(true);
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "Book covers"); // Your Cloudinary upload preset
+    formData.append("upload_preset", "Book covers");
 
     try {
       const response = await fetch(
@@ -27,44 +27,40 @@ const ImageUpload = ({ label, onUpload }) => {
 
       const data = await response.json();
       setUploading(false);
-      onUpload(data.secure_url); // Send image URL to parent
+      onUpload(data.secure_url); // Send Cloudinary URL back to parent
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Upload failed:", error);
       setUploading(false);
     }
-  };
+  }, [onUpload]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/jpeg": [],
+      "image/png": [],
+    },
+    multiple: false,
+  });
 
   return (
-    <div>
-      <p className="addbook-header">{label}</p>
-      <div
-        className="image-upload-container"
-        onClick={() => fileInputRef.current?.click()}
-        style={{
-          width: "150px",
-          height: "200px",
-          border: "1px solid purple",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          position: "relative",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderRadius: "10px",
-          backgroundImage: preview ? `url(${preview})` : "none",
-        }}
-      >
-        {uploading ? "Uploading..." : !preview ? "Click to Upload" : ""}
-      </div>
+    <div className="for-input1">
+      <label className="admin-label">{label}</label>
 
-      <input
-        type="file"
-        ref={fileInputRef}
-        accept="image/*"
-        style={{ display: "none" }}
-        onChange={handleFileChange}
-      />
+      <div {...getRootProps()} id="dropzone-area">
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the image here...</p>
+        ) : preview ? (
+          <img
+            src={preview}
+            alt="Preview"
+            style={{ width: "100%", borderRadius: "8px" }}
+          />
+        ) : (
+          <p>{uploading ? "Uploading..." : "Drag & drop image here, or click to select"}</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import './AdminPage.css';
 import { useDropzone } from 'react-dropzone';
 import { useState, useCallback } from 'react';
+import ImageUpload from './ImageUpload';
 
 
 
@@ -90,6 +91,9 @@ function AdminPage() {
             multiple: false
             });
 
+    const [coverUrl, setCoverUrl] = useState('');
+        
+
 
 
 
@@ -115,7 +119,8 @@ function AdminPage() {
 
                     </div>
             
-                    <div className="for-input1" id='for-cover'>
+                    {
+                    /*<div className="for-input1" id='for-cover'>
                         <label htmlFor="cover" className='admin-label'>Front Cover</label>
   
                         <div {...getRootProps()} id='dropzone-area'>
@@ -128,6 +133,13 @@ function AdminPage() {
                             {coverPreview && <img src={coverPreview} alt="Preview" style={{ marginTop: '10px', width: '100%', borderRadius: '8px' }} />}
                         </div>
                     </div>
+                    */
+                    }
+                    
+                    <div className="for-input1" id='for-cover'>
+                        <ImageUpload label="Front Cover" onUpload={(url) => setCoverUrl(url)} />
+                    </div>
+
 
 
                     <div className="for-input1" id='for-aboutBook'>
