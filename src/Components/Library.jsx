@@ -1,7 +1,7 @@
 import React from 'react';
 import './Library.css';
 
-const Library = ({ books, onDelete }) => {
+const Library = ({ books, onDelete, onEdit }) => {
   return (
     <div id="library">
       <h2 className="library-header">Library</h2>
@@ -33,7 +33,7 @@ const Library = ({ books, onDelete }) => {
               </div>
               
               <div id="book-actions">
-                <button className="edit-btn">Edit</button>
+                <button className="edit-btn" onClick={() => onEdit(book)} >Edit</button>
                 <button className="delete-btn" onClick={() => onDelete(book.id)}>Delete</button>
               </div>
             </div>
