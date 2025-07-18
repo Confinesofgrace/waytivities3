@@ -59,16 +59,22 @@ function Navbar() {
                         </NavLink>
                     </div>
 
-                    <div id="navs">
-                        <NavLink to='/admin' activeclassname="active" onClick={closeMenu}>
-                        Admin
-                        <hr id='tab-hr'/>
-                        </NavLink>
-                    </div>
+                    { 
+                        /*  
+                            <div id="navs">
+                                <NavLink to='/admin' activeclassname="active" onClick={closeMenu}>
+                                Admin
+                                <hr id='tab-hr'/>
+                                </NavLink>
+                            </div>
+                        */
+                    }
+
+                    
 
                     <div id="navs">
                         <NavLink to='/adminpage' activeclassname="active" onClick={closeMenu}>
-                        AdminPage
+                        Admin
                         <hr id='tab-hr'/>
                         </NavLink>
                     </div>
