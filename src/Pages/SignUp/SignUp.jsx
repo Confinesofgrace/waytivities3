@@ -1,62 +1,101 @@
-import { Link } from 'react-router-dom';
-import './SignUp.css'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import './SignUp.css';
 
-function SignUp () {
-    return (
-        <div id='page-layout'>
+function SignUp() {
+  const auth = getAuth();
+  const navigate = useNavigate();
 
-            <div id='signup-modal'>
-                <div id='signup-content'>
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
-                    <div id='signup-header' >
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError('');
 
-                        <h3>Waytivities</h3>
-                        <p>Create your waytivities account</p>
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-                        <hr/>
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert('Account created!');
+      navigate('/login'); // Redirect to login or another page
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
-                    </div>
-                    
+  return (
+    <div id='page-layout'>
+      <div id='signup-modal'>
+        <div id='signup-content'>
+          <div id='signup-header'>
+            <h3>Waytivities</h3>
+            <p>Create your Waytivities account</p>
+            <hr />
+          </div>
 
-                    
-                    <div id='signup-options'>
-                        
-                        <div id='signup-email' >
-                            Sign up with Email
-                            
-                            <input id='signup-input' placeholder='Email'/>
-                            <input id='signup-input' placeholder='Password'/>
-                            <input id='signup-input' placeholder='Confirm Password'/>
-                            <button><Link style={{color:'white'}}>Create account</Link></button>
-                        </div>
+          <div id='signup-options'>
+            <form id='signup-email' onSubmit={handleSignup}>
+              <div>Sign up with Email</div>
+              <input
+                id='signup-input'
+                placeholder='Email'
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                id='signup-input'
+                placeholder='Password'
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <input
+                id='signup-input'
+                placeholder='Confirm Password'
+                type='password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              {error && <p style={{ color: 'red', fontSize: '12px' }}>{error}</p>}
 
-                        <div id='or-divider'> 
-                            <p>or</p> 
-                        </div>
-                        
-                        
+              <button type='submit' style={{ color: 'white' }}>
+                Create account
+              </button>
+            </form>
 
-                        <div id='signup-alternative' >
-                            
-                            <div id='signup-with'>Sign up with Google</div>
-                            <div id='signup-with'>Sign up with Facebook</div>
-                        </div>
-                        
-                        
-                    </div>
-                                       
-                    
-                </div>
+            <div id='or-divider'><p>or</p></div>
 
-                <div id='have-account' >
-                    <p>Already have an account? <span><Link to= '/login' style={{fontWeight:'600', color: 'purple', cursor:'pointer',}}>Log In</Link></span></p>
-                </div>
-                
-                
+            <div id='signup-alternative'>
+              <div id='signup-with'>Sign up with Google</div>
+              <div id='signup-with'>Sign up with Facebook</div>
             </div>
-            
+          </div>
         </div>
-    );
+
+        <div id='have-account'>
+          <p>
+            Already have an account?{' '}
+            <span>
+              <Link to='/login' style={{ fontWeight: '600', color: 'purple', cursor: 'pointer' }}>
+                Log In
+              </Link>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default SignUp;

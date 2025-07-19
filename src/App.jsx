@@ -9,25 +9,29 @@ import Navbar from './Components/Navbar';
 import Admin from './Pages/Admin/Admin';
 import { BookProvider } from './Pages/BookContext/BookContext'; // Import BookProvider
 import AdminPage from './Pages/Admin/AdminPage';
+import { AuthProvider } from './Components/AuthContext';
+
 
 function App() {
   return (
-    <BookProvider>
-      <BrowserRouter>
-        <main>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/books/:bookId" element={<Books />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/adminpage" element={<AdminPage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
-          </Routes>
-        </main>
-      </BrowserRouter>
-    </BookProvider>
+    <AuthProvider> 
+      <BookProvider>
+        <BrowserRouter>
+          <main>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/books/:bookId" element={<Books />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/adminpage" element={<AdminPage />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<LogIn />} />
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </BookProvider>
+    </AuthProvider>
   );
 }
 

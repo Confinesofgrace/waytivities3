@@ -4,12 +4,45 @@ import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
 import Logo from '../assets/Waytivities-Logo/logo.png';
+import { useAuth } from '../Components/AuthContext';
+
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
+
+    const { user, logout } = useAuth();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            closeMenu();
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
+    const AuthButtons = () => {
+        return user ? (
+            <button id="logout-btn" onClick={handleLogout}>
+            Log Out
+            </button>
+        ) : (
+            <>
+            <NavLink to='/login' onClick={closeMenu}>
+                <button id="login-btn">Log In</button>
+            </NavLink>
+            <NavLink to='/signup' onClick={closeMenu}>
+                <button id="signup-btn">Sign Up</button>
+            </NavLink>
+            </>
+        );
+    };
+
+
+
 
     return (
         <div>
@@ -70,8 +103,6 @@ function Navbar() {
                         */
                     }
 
-                    
-
                     <div id="navs">
                         <NavLink to='/adminpage' activeclassname="active" onClick={closeMenu}>
                         Admin
@@ -80,27 +111,21 @@ function Navbar() {
                     </div>
 
 
-                        {/* Show login/signup buttons only when mobile menu is open */}
-                        {isMenuOpen && (
-                            <div className="mobile-auth-buttons">
-                            <NavLink to='/login' onClick={closeMenu}>
-                                <button id="login-btn">Log In</button>
-                            </NavLink>
-                            <NavLink to='/signup' onClick={closeMenu}>
-                                <button id="signup-btn">Sign Up</button>
-                            </NavLink>
-                            </div>
-                        )}
-                    </div>
+                    {/* Show login/signup buttons only when mobile menu is open */}
 
+                    {isMenuOpen && (
+                        <div id="auth-buttons-mobile">
+                            <AuthButtons />
+                        </div>
+                    )} 
+
+                </div>
+
+                
                 <div id="nav-right">
                     {/* Desktop-only buttons */}
-                    <NavLink to='/login' onClick={closeMenu}>
-                        <button id="login-btn">Log In</button>
-                    </NavLink>
-                    <NavLink to='/signup' onClick={closeMenu}>
-                        <button id="signup-btn">Sign Up</button>
-                    </NavLink>
+                    <AuthButtons/>
+
                     <div id="search-box">
                         <BsSearch color="whitesmoke" size={25} />
                         <input type="text" placeholder="Search..." />
@@ -111,6 +136,9 @@ function Navbar() {
                         <hr />
                     </div>
                 </div>
+
+                
+
 
             </nav>
             
