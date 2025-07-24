@@ -1,70 +1,112 @@
-import { Link } from 'react-router-dom';
-import './LogIn.css'
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import './LogIn.css';
 
-function LogIn () {
-    return (
-        <div id='page-layout'>
+function LogIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const auth = getAuth();
 
-            <div id='login-modal'>
-                <div id='login-content'>
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
 
-                    <div id='login-header'>
-                        <h3>Waytivities</h3>
-                        <p>Log into your account</p>
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/'); 
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
-                        <hr/>
+  const loginWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
-                    </div>
-                    
+  const loginWithFacebook = async () => {
+    try {
+      await signInWithPopup(auth, new FacebookAuthProvider());
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
-                    
-                    <div id='login-options'>
-                    
-                        <div id='login-email'>
-                            Log In with Email
-                            
-                            <input id='login-input' placeholder='Email'/>
-                            <input id='login-input' placeholder='Password'/>
-                            
-                            <button><Link style={{color:'white'}}>Log In</Link></button>
+  return (
+    <div id="page-layout">
+      <div id="login-modal">
+        <div id="login-content">
+          <div id="login-header">
+            <h3>Waytivities</h3>
+            <p>Log into your account</p>
+            <hr />
+          </div>
 
-                            <p style={{fontSize:'10px'}}>Forgot password?</p>
-                        </div>
+          <div id="login-options">
+            <form id="login-email" onSubmit={handleLogin}>
+              Log In with Email
 
-                        <div id='or-divider'>
-                            <p>or</p>
-                        </div>
+              <input
+                id="login-input"
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                id="login-input"
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
+              <button type="submit">Log In</button>
 
-                        <div id='login-alternative'>
-                            
-                            <div id='login-with'>Log In with Google</div>
-                            <div id='login-with'>Log In with Facebook</div>
-                        </div>
-                    
-                    
-                    </div>
-                    
-                                    
-                    
-                </div>
+              <p style={{ fontSize: '10px' }}>Forgot password?</p>
 
-                <div id='new-user' >
-                    <p>Don't have an account? <span><Link to= '/signup' 
-                    style={{
-                        fontWeight:'600', 
-                        color: 'purple', 
-                        cursor:'pointer',
+              {error && <p style={{ fontSize: '12px', color: 'red' }}>{error}</p>}
+            </form>
 
-                    }}>Sign Up</Link></span></p>
-                </div>
-
-                
-                
+            <div id="or-divider">
+              <p>or</p>
             </div>
-        
+
+            <div id="login-alternative">
+              <div id="login-with" onClick={loginWithGoogle}>Log In with Google</div>
+              <div id="login-with" onClick={loginWithFacebook}>Log In with Facebook</div>
+            </div>
+          </div>
         </div>
-    );
+
+        <div id="new-user">
+          <p>
+            Don't have an account?{' '}
+            <span>
+              <Link
+                to="/signup"
+                style={{
+                  fontWeight: '600',
+                  color: 'purple',
+                  cursor: 'pointer',
+                }}
+              >
+                Sign Up
+              </Link>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default LogIn;

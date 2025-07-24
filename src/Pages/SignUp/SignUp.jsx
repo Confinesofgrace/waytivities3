@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider
+} from 'firebase/auth';
+
 import './SignUp.css';
 
 function SignUp() {
@@ -29,6 +36,31 @@ function SignUp() {
       setError(err.message);
     }
   };
+
+  const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
+
+  const handleGoogleSignup = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      alert('Signed up with Google!');
+      navigate('/'); // or wherever you want to go after signup
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleFacebookSignup = async () => {
+    try {
+      await signInWithPopup(auth, facebookProvider);
+      alert('Signed up with Facebook!');
+      navigate('/'); // or wherever you want to go after signup
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+
 
   return (
     <div id='page-layout'>
@@ -77,8 +109,8 @@ function SignUp() {
             <div id='or-divider'><p>or</p></div>
 
             <div id='signup-alternative'>
-              <div id='signup-with'>Sign up with Google</div>
-              <div id='signup-with'>Sign up with Facebook</div>
+              <div id='signup-with' onClick={handleGoogleSignup} >Sign up with Google</div>
+              <div id='signup-with' onClick={handleFacebookSignup} >Sign up with Facebook</div>
             </div>
           </div>
         </div>
