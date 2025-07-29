@@ -109,6 +109,12 @@ function Navbar() {
                         <hr id='tab-hr'/>
                         </NavLink>
                     </div>
+                    <div id="navs">
+                        <NavLink to='/cart' activeclassname="active" onClick={closeMenu}>
+                        Cart
+                        <hr id='tab-hr'/>
+                        </NavLink>
+                    </div>
 
 
                     {/* Show login/signup buttons only when mobile menu is open */}

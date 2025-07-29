@@ -10,6 +10,7 @@ import Admin from './Pages/Admin/Admin';
 import { BookProvider } from './Pages/BookContext/BookContext'; // Import BookProvider
 import AdminPage from './Pages/Admin/AdminPage';
 import { AuthProvider } from './Components/AuthContext';
+import Cart from './Pages/Cart/Cart';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/adminpage" element={<AdminPage />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<LogIn />} />
+              <Route path="/cart" element={<Cart/>} />
             </Routes>
           </main>
         </BrowserRouter>

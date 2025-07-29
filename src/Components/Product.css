@@ -1,0 +1,25 @@
+#product-in-cart
+{
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 24px 24px 24px 0px;
+
+
+}
+
+#product-img-details
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#product-image
+{
+    width: 100px;
+    height: 120px;
+    /*border-radius: 10px;*/
+}
