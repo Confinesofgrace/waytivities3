@@ -36,6 +36,26 @@ function BookPreview() {
 
             {/* New Releases */}
             <div className="category-section">
+                <h3 style={{ marginBottom: '10px' }}>Recommended</h3>
+                <div className="scroll-buttons">
+                    <button className="scroll-btn" onClick={() => scrollLeft(scrollContainer1)}>‹</button>
+                </div>
+                <div className="scroll-container" ref={scrollContainer1}>
+                    <div className="preview">
+                        {books.map((book) => (
+                            <Link key={book.id} to={`/books/${book.id}`} className="book-cover" style={{ backgroundImage: `url(${book.frontCover})` }}/>
+
+                                
+                            
+                        ))}
+                    </div>
+                </div>
+                <div className="scroll-buttons">
+                    <button className="scroll-btn" onClick={() => scrollRight(scrollContainer1)}>›</button>
+                </div>
+            </div>
+
+            <div className="category-section">
                 <h3 style={{ marginBottom: '10px' }}>New Releases</h3>
                 <div className="scroll-buttons">
                     <button className="scroll-btn" onClick={() => scrollLeft(scrollContainer1)}>‹</button>
@@ -44,7 +64,8 @@ function BookPreview() {
                     <div className="preview">
                         {books.map((book) => (
                             <Link key={book.id} to={`/books/${book.id}`} className="book-cover" style={{ backgroundImage: `url(${book.frontCover})` }}>
-                                <p className="preview-book-title">{book.title}</p>
+
+                                
                             </Link>
                         ))}
                     </div>
@@ -54,29 +75,6 @@ function BookPreview() {
                 </div>
             </div>
 
-            {/* Recommended */}
-            <div className="category-section">
-                <h3 style={{ marginBottom: '10px' }}>Recommended</h3>
-                <div className="scroll-buttons">
-                    <button className="scroll-btn" onClick={() => scrollLeft(scrollContainer2)}>‹</button>
-                </div>
-                <div className="scroll-container" ref={scrollContainer2}>
-                    <div className="preview">
-                        {books.slice(0, 5).map((book) => (
-                            <div 
-                                key={book.id} 
-                                className="book-cover"
-                                style={{ backgroundImage: `url(${book.frontCover})` }}
-                            >
-                                <p className="preview-book-title">{book.title}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="scroll-buttons">
-                    <button className="scroll-btn" onClick={() => scrollRight(scrollContainer2)}>›</button>
-                </div>
-            </div>
         </div>
     );
 }
