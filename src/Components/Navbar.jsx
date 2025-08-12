@@ -6,6 +6,8 @@ import { useState } from 'react';
 import Logo from '../assets/Waytivities-Logo/logo.png';
 import { useAuth } from '../Components/AuthContext';
 
+import { FaCartShopping } from "react-icons/fa6";
+
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -111,7 +113,11 @@ function Navbar() {
                     </div>
                     <div id="navs">
                         <NavLink to='/cart' activeclassname="active" onClick={closeMenu}>
-                        Cart
+                        <span style={{display:'flex', alignItems:'center'}}>
+                            <p>Cart</p> <FaCartShopping/>
+                        </span>
+                        
+
                         <hr id='tab-hr'/>
                         </NavLink>
                     </div>

@@ -1,3 +1,4 @@
+import OrderSummary from '../../Components/OrderSummary';
 import Product from '../../Components/Product';
 import './Cart.css';
 
@@ -34,12 +35,7 @@ function Cart () {
 
                         <div>
                             <Product/>
-                            <Product/>
                         </div>
-                    </div>
-
-                    <div>
-                        <h5 style={{fontSize:'30px'}}>Order Summary</h5>
                     </div>
                     
                 </div>

@@ -1,0 +1,25 @@
+#order-summary
+{
+    background-color: rgb(249, 242, 250);
+}
+
+#checkout
+{
+    background-color: rgb(88, 88, 245);
+    display:flex;
+    justify-content:center;
+    padding: 14px 0px;
+    cursor: pointer;
+
+    margin-top:'20px';
+}
+
+#checkout button
+{
+    
+    font-size: 12px;
+    background: #dddddd00;
+    border: none;
+    cursor: pointer;
+    color: white;
+}

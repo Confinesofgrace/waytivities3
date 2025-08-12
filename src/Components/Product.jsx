@@ -1,10 +1,11 @@
+import { AiFillDelete } from 'react-icons/ai';
 import './Product.css';
 
 function Product () {
     return (
         <div>
             <hr/>
-            <div id='product-in-cart'>
+            <div id='product-in-cart' >
             
                 <div id='product-img-details'>
                     <img id='product-image'/>
@@ -15,11 +16,26 @@ function Product () {
                     </div>
                 </div>
                 
-                <div>Quantity</div>
-                <div>Total</div>
+                <div style={{width:'40%', display:'flex', alignItems:'center', }}>
+                    
+                    <div id="quantity-control">
+                        <button>-</button>
+                        <span>2</span>
+                        <button>+</button>
+                    </div>
+
+                    <div>
+                        <AiFillDelete/>
+                    </div>
+
+                    <div id='product-total'>
+                        <span style={{display:'flex'}}>&#8358;<p style={{marginLeft:'auto'}}>Total</p></span>
+                        
+                    </div>
+                </div>
+                
             </div>
-        </div>
-        
+        </div>        
     )
 }
 

@@ -15,11 +15,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
 }
 
 #product-image
 {
     width: 100px;
     height: 120px;
-    /*border-radius: 10px;*/
+    
+}
+
+
+#quantity-control 
+{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid rgba(193, 62, 245, 0.349);
+  border-radius: 4px;
+  padding: 6px 0px;
+
+  margin-right:6px;
+
+}
+
+#quantity-control button 
+{
+  padding: 4px 10px;
+  font-size: 16px;
+  background: #dddddd00;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#product-total 
+{
+  font-weight: 600;
+  margin-left: auto;
+  
 }
