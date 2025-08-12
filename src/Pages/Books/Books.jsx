@@ -10,9 +10,11 @@ function Books() {
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadBooks = async () => {
+            setLoading(true);
             const querySnapshot = await getDocs(collection(db, 'books'));
             const booksArray = querySnapshot.docs.map(docSnap => ({
                 id: docSnap.id,
@@ -21,12 +23,10 @@ function Books() {
             setBooks(booksArray);
 
             if (bookId) {
-                // Try to find book locally first
                 const foundBook = booksArray.find(b => b.id === bookId);
                 if (foundBook) {
                     setSelectedBook(foundBook);
                 } else {
-                    // If not found, fetch from Firestore
                     const bookRef = doc(db, 'books', bookId);
                     const bookSnap = await getDoc(bookRef);
                     if (bookSnap.exists()) {
@@ -36,6 +36,7 @@ function Books() {
             } else if (booksArray.length > 0) {
                 setSelectedBook(booksArray[0]);
             }
+            setLoading(false);
         };
 
         loadBooks();
@@ -51,22 +52,18 @@ function Books() {
 
     return (
         <div id='page-layout'>
-            <div style={{ position: 'relative' }}>
+            <div className="relative-container">
                 <div id='books-layout'>
-                    {selectedBook ? (
-                        <div id='preview-box' style={{ display: 'flex' }} key={selectedBook.id}>
+                    {loading ? (
+                        <p className="loading-message">Loading books...</p>
+                    ) : selectedBook ? (
+                        <div id='preview-box' className="preview-flex" key={selectedBook.id}>
                             <div id='book-preview'>
                                 <div
                                     id='book-cover'
+                                    className={selectedBook.frontCover ? "with-cover" : "no-cover"}
                                     style={{
-                                        backgroundImage: selectedBook.frontCover ? `url(${selectedBook.frontCover})` : "none",
-                                        backgroundColor: selectedBook.frontCover ? "transparent" : "#ccc",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        textAlign: "center",
-                                        color: "black",
-                                        fontWeight: "bold"
+                                        backgroundImage: selectedBook.frontCover ? `url(${selectedBook.frontCover})` : "none"
                                     }}
                                 >
                                     {!selectedBook.frontCover && <p>{selectedBook.title}</p>}
@@ -77,7 +74,7 @@ function Books() {
                                     onClick={toggleExpand}
                                 >
                                     <p>
-                                        <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{selectedBook.title}</span>
+                                        <span className="book-title">{selectedBook.title}</span>
                                         <br />
                                         {selectedBook.aboutBook}
                                     </p>
