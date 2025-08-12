@@ -3,40 +3,43 @@ import { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import './Books.css';
-import BookPreview2 from "../../Components/BookPreview2";
+import BookListsPreview from "../../Components/BookListsPreview";
 
 function Books() {
-    const { bookId } = useParams(); // Get bookId from URL
+    const { bookId } = useParams();
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
     useEffect(() => {
-        fetchBooks();
-    }, []);
+        const loadBooks = async () => {
+            const querySnapshot = await getDocs(collection(db, 'books'));
+            const booksArray = querySnapshot.docs.map(docSnap => ({
+                id: docSnap.id,
+                ...docSnap.data()
+            }));
+            setBooks(booksArray);
 
-    useEffect(() => {
-        if (bookId) {
-            fetchSelectedBook(bookId);
-        }
+            if (bookId) {
+                // Try to find book locally first
+                const foundBook = booksArray.find(b => b.id === bookId);
+                if (foundBook) {
+                    setSelectedBook(foundBook);
+                } else {
+                    // If not found, fetch from Firestore
+                    const bookRef = doc(db, 'books', bookId);
+                    const bookSnap = await getDoc(bookRef);
+                    if (bookSnap.exists()) {
+                        setSelectedBook({ id: bookSnap.id, ...bookSnap.data() });
+                    }
+                }
+            } else if (booksArray.length > 0) {
+                setSelectedBook(booksArray[0]);
+            }
+        };
+
+        loadBooks();
     }, [bookId]);
-
-    const fetchBooks = async () => {
-        const querySnapshot = await getDocs(collection(db, 'books'));
-        const booksArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setBooks(booksArray);
-        if (!bookId && booksArray.length > 0) {
-            setSelectedBook(booksArray[0]); // Default to first book if no specific book is selected
-        }
-    };
-
-    const fetchSelectedBook = async (id) => {
-        const bookRef = doc(db, 'books', id);
-        const bookSnap = await getDoc(bookRef);
-        if (bookSnap.exists()) {
-            setSelectedBook(bookSnap.data());
-        }
-    };
 
     const handleBookClick = (book) => {
         setSelectedBook(book);
@@ -53,22 +56,26 @@ function Books() {
                     {selectedBook ? (
                         <div id='preview-box' style={{ display: 'flex' }} key={selectedBook.id}>
                             <div id='book-preview'>
-                                <div id='book-cover' 
-                                    style={{ 
-                                        backgroundImage: selectedBook.frontCover ? `url(${selectedBook.frontCover})` : "none", 
-                                        backgroundColor: selectedBook.frontCover ? "transparent" : "#ccc", 
-                                        display: "flex", 
-                                        alignItems: "center", 
-                                        justifyContent: "center", 
+                                <div
+                                    id='book-cover'
+                                    style={{
+                                        backgroundImage: selectedBook.frontCover ? `url(${selectedBook.frontCover})` : "none",
+                                        backgroundColor: selectedBook.frontCover ? "transparent" : "#ccc",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
                                         textAlign: "center",
                                         color: "black",
-                                        fontWeight: "bold" 
-                                    }}>
+                                        fontWeight: "bold"
+                                    }}
+                                >
                                     {!selectedBook.frontCover && <p>{selectedBook.title}</p>}
                                 </div>
-                                <div id='description-overlay' 
-                                    className={isExpanded ? 'expanded' : ''} 
-                                    onClick={toggleExpand}>
+                                <div
+                                    id='description-overlay'
+                                    className={isExpanded ? 'expanded' : ''}
+                                    onClick={toggleExpand}
+                                >
                                     <p>
                                         <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{selectedBook.title}</span>
                                         <br />
@@ -88,7 +95,7 @@ function Books() {
                     )}
                 </div>
                 <div id='booklists'>
-                    <BookPreview2 books={books} onBookClick={handleBookClick} />
+                    <BookListsPreview books={books} onBookClick={handleBookClick} />
                 </div>
             </div>
         </div>

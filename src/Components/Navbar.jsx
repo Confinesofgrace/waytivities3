@@ -81,7 +81,7 @@ function Navbar() {
                     </div>
 
                     <div id="navs">
-                        <NavLink to='/books/:bookId' activeclassname="active" onClick={closeMenu}>
+                        <NavLink to='/books' activeclassname="active" onClick={closeMenu}>
                         Books
                         <hr id='tab-hr'/>
                         </NavLink>

@@ -1,9 +1,6 @@
 #books-layout
 {
-    /*background-color: yellow;*/
-    height: 600px;
-
-    
+    height: 600px;   
 }
 
 #book-preview
@@ -78,25 +75,24 @@
 }
 
 
-#book-trailer-container {
-    width: 50%;
-    height: 500px; /* Set a fixed height */
+#book-trailer-container 
+{
+    width: 70%;
+    height: 500px; 
 
-    margin-left: 10%;
+    margin-left: auto;
 
-    overflow-y: auto; /* Enable vertical scrolling */
-    border: 1px solid #ccc; /* Optional: Add a border for visibility */
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
     border-style: none;
     padding: 10px;
     background: #f8f8f863; /* Light background for contrast */
 }
 
-#book-trailer {
+#book-trailer 
+{
     padding: 10px;
 }
-
-
-
 
 #booklists
 {

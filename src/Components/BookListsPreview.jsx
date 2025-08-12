@@ -1,124 +1,103 @@
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { db } from '../firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 import './BookListsPreview.css';
-import { useRef } from 'react';
 
-function BookListsPreview() {
-    // Refs for scrolling containers
-    const scrollContainer1 = useRef(null);
-    const scrollContainer2 = useRef(null);
+export default function BookListsPreview({ initialCategories }) {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const scrollRefs = useRef({});
+  const navigate = useNavigate();
 
-    const scrollLeft = (ref) => {
-        ref.current.scrollBy({
-            left: -200, // Scroll 200px to the left
-            behavior: 'smooth'
-        });
+  useEffect(() => {
+    const fetchBooks = async () => {
+      setLoading(true);
+      try {
+        const snapshot = await getDocs(collection(db, 'books'));
+        const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setBooks(list);
+      } catch (err) {
+        console.error('Failed to fetch books:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const scrollRight = (ref) => {
-        ref.current.scrollBy({
-            left: 200, // Scroll 200px to the right
-            behavior: 'smooth'
-        });
-    };
+    fetchBooks();
+  }, []);
 
-    return (
-        <div id="body-bookListsPreview">
-            <h1 style={{ marginBottom: '15px' }}>
-                <Link to= 'books'>
-                    
-                </Link>
-                
-            </h1>
+  const categories = useCallback(() => {
+    if (initialCategories && initialCategories.length) return initialCategories;
 
-            {/* Category 1 */}
-            <div id='category-1' className="category-section">
-                <h3 style={{ marginBottom: '10px' }}>
-                    New Releases
-                </h3>
+    const sortedByDate = [...books].sort((a, b) => {
+      const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.createdAt || 0);
+      const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.createdAt || 0);
+      return bTime - aTime;
+    });
 
-                <div className="scroll-buttons">
-                    <button className="scroll-btn" onClick={() => scrollLeft(scrollContainer1)}>‹</button>
-                </div>
+    return [
+      { key: 'new', title: 'New Releases', books: sortedByDate.slice(0, 8) },
+      { key: 'recommended', title: 'Recommended', books: books.slice(0, 12) },
+    ];
+  }, [books, initialCategories]);
 
-                <div className="scroll-container" ref={scrollContainer1}>
-                    <div className="preview">
-                        <div className="book-cover">
-                            <img src="path-to-image1.jpg" alt="The Standard of Truth" />
-                            <p>The Standard of Truth</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image2.jpg" alt="Within the Exact" />
-                            <p>Within the Exact</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image3.jpg" alt="Dispensation of the Sons" />
-                            <p>Dispensation of the Sons</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image4.jpg" alt="Smile of the Dancing Naked" />
-                            <p>Smile of the Dancing Naked</p>
-                        </div>
-                        <div id='Book5' className="book-cover">
-                            <img src="path-to-image5.jpg" alt="Relationship Matters" />
-                            <p>Relationship Matters</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image6.jpg" alt="The Rosebud" />
-                            <p>The Rosebud</p>
-                        </div>
-                    </div>
-                </div>
+  const scroll = (key, dir = 'right') => {
+    const el = scrollRefs.current[key];
+    if (!el) return;
+    const amount = dir === 'left' ? -300 : 300;
+    el.scrollBy({ left: amount, behavior: 'smooth' });
+  };
 
-                <div className="scroll-buttons">
-                    <button className="scroll-btn" onClick={() => scrollRight(scrollContainer1)}>›</button>
-                </div>
+  if (loading) return <div id="body-bookListsPreview"><p>Loading books…</p></div>;
+
+  const buckets = categories();
+
+  return (
+    <div id="body-bookListsPreview">
+      {buckets.map(bucket => (
+        <section key={bucket.key} className="category-section">
+          <h3>{bucket.title}</h3>
+
+          <button
+            className="scroll-btn left"
+            aria-label={`Scroll ${bucket.title} left`}
+            onClick={() => scroll(bucket.key, 'left')}
+          >
+            ‹
+          </button>
+
+          <div
+            className="scroll-container"
+            ref={(el) => (scrollRefs.current[bucket.key] = el)}
+            role="list"
+          >
+            <div className="preview">
+              {bucket.books.map(book => (
+                <article
+                  key={book.id}
+                  className="book-cover"
+                  role="listitem"
+                  onClick={() => navigate(`/books/${book.id}`)}
+                  title={book.title}
+                  style={{ backgroundImage: book.frontCover ? `url(${book.frontCover})` : 'none' }}
+                >
+                  {!book.frontCover && <div className="placeholder-title">{book.title}</div>}
+                  <div className="cover-caption">{book.title}</div>
+                </article>
+              ))}
             </div>
+          </div>
 
-            {/* Category 2 */}
-            <div id='category-2' className="category-section">
-                <h3 style={{ marginBottom: '10px' }}>
-                    Recommended
-                </h3>
-
-                <div className="scroll-buttons">
-                    <button className="scroll-btn" onClick={() => scrollLeft(scrollContainer2)}>‹</button>
-                </div>
-
-                <div className="scroll-container" ref={scrollContainer2}>
-                    <div className="preview">
-                        <div className="book-cover">
-                            <img src="path-to-image1.jpg" alt="The Standard of Truth" />
-                            <p>The Standard of Truth</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image2.jpg" alt="Within the Exact" />
-                            <p>Within the Exact</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image3.jpg" alt="Dispensation of the Sons" />
-                            <p>Dispensation of the Sons</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image4.jpg" alt="Smile of the Dancing Naked" />
-                            <p>Smile of the Dancing Naked</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image5.jpg" alt="Relationship Matters" />
-                            <p>Relationship Matters</p>
-                        </div>
-                        <div className="book-cover">
-                            <img src="path-to-image6.jpg" alt="The Rosebud" />
-                            <p>The Rosebud</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="scroll-buttons">
-                    <button className="scroll-btn" onClick={() => scrollRight(scrollContainer2)}>›</button>
-                </div>
-            </div>
-        </div>
-    );
+          <button
+            className="scroll-btn right"
+            aria-label={`Scroll ${bucket.title} right`}
+            onClick={() => scroll(bucket.key, 'right')}
+          >
+            ›
+          </button>
+        </section>
+      ))}
+    </div>
+  );
 }
-
-export default BookListsPreview;
