@@ -2,9 +2,9 @@ import './OrderSummary.css';
 
 function OrderSummary () {
     return (
-        <div>
+        <div> 
             <div id="order-summary" >
-                <h5 style={{fontSize:'20px'}}>Order Summary</h5>
+                <p style={{fontSize:'20px'}}>Order Summary</p>
 
                 <div style={{
                     fontSize:'12px',

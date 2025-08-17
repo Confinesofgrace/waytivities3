@@ -79,11 +79,11 @@ export default function BookListsPreview({ initialCategories }) {
                   className="book-cover"
                   role="listitem"
                   onClick={() => navigate(`/books/${book.id}`)}
-                  title={book.title}
+                  //title={book.title}
                   style={{ backgroundImage: book.frontCover ? `url(${book.frontCover})` : 'none' }}
                 >
                   {!book.frontCover && <div className="placeholder-title">{book.title}</div>}
-                  <div className="cover-caption">{book.title}</div>
+                  
                 </article>
               ))}
             </div>

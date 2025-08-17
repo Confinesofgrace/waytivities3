@@ -55,7 +55,7 @@ function BookPreview() {
                 style={{ backgroundImage: `url(${book.frontCover})` }}
                 title={book.title}
               >
-                <p className="preview-book-title">{book.title}</p>
+                
               </Link>
             ))}
           </div>
@@ -88,7 +88,7 @@ function BookPreview() {
                 style={{ backgroundImage: `url(${book.frontCover})` }}
                 title={book.title}
               >
-                <p className="preview-book-title">{book.title}</p>
+                
               </Link>
             ))}
           </div>

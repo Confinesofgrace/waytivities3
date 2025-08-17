@@ -3,17 +3,9 @@
     padding: 70px 0;
 }
 
-#cart-layout-title
-{
-    display: flex;
-    align-items: baseline;
-
-    font-size: 40px;    
-}
-
 #your-cart
 {
-    width: 70%;
+    width:70%;
 }
 
 #product-title
