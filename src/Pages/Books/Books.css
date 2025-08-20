@@ -1,6 +1,26 @@
+.relative-container 
+{
+    position: relative;
+}
+
+.loading-message 
+{
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+}
+
 #books-layout
 {
-    height: 600px;   
+    
+    margin: 8px 0px;
+}
+
+.preview-flex 
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 #book-preview 
@@ -19,103 +39,6 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain; 
-}
-
-#description-overlay
-{
-    background-color: rgb(0, 0, 0);
-    color: white;
-    font-size: 16px;
-    
-    
-    width: 100%;
-    height: 150px;
-
-    padding: 20px 50px;
-
-    overflow: hidden;
-
-    position: absolute;
-
-    bottom: 0;
-    left: 0;
-
-    cursor: pointer;
-
-    transition: height 0.3s ease-in-out;
-    
-}
-
-#description-overlay.expanded 
-{
-    height: 450px; /* Set this to show more content */
-    
-}
-
-
-
-#fade::after 
-{
-    content: "";
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 50%;
-    z-index: 1;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(22, 22, 22) 95%);
-}
-
-#fade.hidden
-{
-    display: none;
-}
-
-
-#book-trailer-container 
-{
-    width: 70%;
-    height: 500px; 
-
-    margin-left: auto;
-
-    overflow-y: auto; 
-    border: 1px solid #ccc; 
-    border-style: none;
-    padding: 10px;
-    background: #f8f8f863; /* Light background for contrast */
-}
-
-#book-trailer 
-{
-    padding: 10px;
-}
-
-#booklists
-{
-    position: absolute;
-    top: 500px;
-    z-index: 1;
-}
-
-.relative-container 
-{
-    position: relative;
-}
-
-.preview-flex 
-{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.loading-message 
-{
-    text-align: center;
-    font-size: 1.2rem;
-    color: #555;
 }
 
 #book-cover.with-cover 
@@ -143,14 +66,99 @@
     font-weight: bold;
 }
 
+#description-overlay
+{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-size: 16px;
+    
+    width: 100%;
+    height: 150px;
 
-@media (max-width: 768px) {
-    .preview-flex {
+    padding: 20px 50px;
+
+    overflow: hidden;
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    cursor: pointer;
+
+    transition: height 0.3s ease-in-out;
+    
+}
+
+#description-overlay.expanded 
+{
+    height: 450px; /* Set this to show more content */
+    
+}
+
+#fade::after 
+{
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    z-index: 1;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(22, 22, 22) 95%);
+}
+
+#fade.hidden
+{
+    display: none;
+}
+
+
+#book-trailer-container 
+{
+    width: 70%;
+    height: 500px; 
+
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    border-style: none;
+    padding: 10px;
+    background: #f8f8f863; /* Light background for contrast */
+}
+
+#book-trailer 
+{
+    padding: 10px;
+}
+
+/*
+#booklists
+{
+    position: absolute;
+    top: 500px;
+    z-index: 1;
+}
+*/
+
+
+
+
+
+
+@media (max-width: 1200px) {
+    .preview-flex 
+    {
         flex-direction: column;
     }
 
     #book-preview,
-    #book-trailer-container {
+    #book-trailer-container 
+    {
         max-width: 100%;
+        width: 100%;
     }
+
+    
 }
+
