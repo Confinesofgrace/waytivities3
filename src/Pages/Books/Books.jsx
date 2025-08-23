@@ -4,6 +4,7 @@ import { db } from '../../firebaseConfig';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import './Books.css';
 import BookListsPreview from "../../Components/BookListsPreview";
+import Footer from '../../Components/Footer';
 
 function Books() {
     const { bookId } = useParams();
@@ -51,6 +52,8 @@ function Books() {
     };
 
     return (
+        <span>
+
         <div id='page-layout'>
             <div className="relative-container">
                 <div id='books-layout'>
@@ -94,8 +97,13 @@ function Books() {
                 <div id='booklists'>
                     <BookListsPreview books={books} onBookClick={handleBookClick} />
                 </div>
+
             </div>
+
         </div>
+        
+        <Footer/>
+        </span>
     );
 }
 
