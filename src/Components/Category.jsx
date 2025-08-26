@@ -99,8 +99,8 @@ function Category() {
                             ) : (
                                 <>
                                     <span>{cat.name}</span>
-                                    <button className="edit-btn" onClick={() => { setEditId(cat.id); setEditName(cat.name); }}>Edit</button>
-                                    <button className="delete-btn" onClick={() => handleDeleteCategory(cat.id)}>Delete</button>
+                                    <button className="category-edit-btn" onClick={() => { setEditId(cat.id); setEditName(cat.name); }}>Edit</button>
+                                    <button className="category-delete-btn" onClick={() => handleDeleteCategory(cat.id)}>Delete</button>
                                 </>
                             )}
                         </div>

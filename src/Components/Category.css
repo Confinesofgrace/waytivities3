@@ -46,12 +46,12 @@
   font-size: 12px;
 }
 
-.edit-btn {
+.category-edit-btn {
   background: #2563eb;
   color: white;
 }
 
-.delete-btn {
+.category-delete-btn {
   background: #dc2626;
   color: white;
 }

@@ -1,90 +1,121 @@
-import React, { useEffect, useState } from 'react';
-import './Library.css';
-import { db } from '../firebaseConfig';
-import { collection, getDocs, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import Select from "react-select";
+import { useState, useEffect } from "react";
+import { db } from "../firebaseConfig";
+import { collection, getDocs, updateDoc, doc, arrayUnion, deleteDoc } from "firebase/firestore";
+import "./Library.css";
 
-const Library = ({ books, onDelete, onEdit }) => {
+function Library({ books, onEditBook }) {
   const [categories, setCategories] = useState([]);
 
-  // Fetch categories for dropdown
+  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
-      const snapshot = await getDocs(collection(db, 'categories'));
-      const cats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const snapshot = await getDocs(collection(db, "categories"));
+      const cats = snapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
       setCategories(cats);
     };
     fetchCategories();
   }, []);
 
-  // Assign book to category
+  // Assign category
   const handleAssignCategory = async (bookId, categoryId) => {
+    const bookRef = doc(db, "books", bookId);
     try {
-      const categoryRef = doc(db, 'categories', categoryId);
-      await updateDoc(categoryRef, {
-        books: arrayUnion(bookId)   // Add book ID to category
+      await updateDoc(bookRef, {
+        categories: arrayUnion(categoryId),
       });
-      alert("Book assigned to category!");
+      alert("Category assigned!");
     } catch (err) {
       console.error("Error assigning category:", err);
-      alert("Failed to assign category.");
+    }
+  };
+
+  // Delete book
+  const handleDeleteBook = async (bookId) => {
+    if (!window.confirm("Are you sure you want to delete this book?")) return;
+    try {
+      await deleteDoc(doc(db, "books", bookId));
+      alert("Book deleted!");
+    } catch (err) {
+      console.error("Error deleting book:", err);
     }
   };
 
   return (
-    <div id="library">
-      <h2 className="library-header">Library</h2>
-      <div id="book-shelf">
-        {books.length === 0 ? (
-          <p className="empty-message">No books available</p>
-        ) : (
-          books.map((book) => (
-            <div key={book.id} id="book-holder">
-              
-              <div 
-                id='for-image' 
-                style={{
-                  backgroundImage: book.frontCover ? `url(${book.frontCover})` : "none",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '12px',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  backgroundColor: book.frontCover ? 'transparent' : 'rgba(255, 255, 255, 0.7)',
-                }} 
-              >
-                {!book.frontCover && <p>{book.title}</p>}  
-              </div>
-              
-              <div id="book-actions">
-                <button className="edit-btn" onClick={() => onEdit(book)} >Edit</button>
-                <button className="delete-btn" onClick={() => onDelete(book.id)}>Delete</button>
-              </div>
+    <div className="library-grid">
+      {books.map(book => (
+        <div key={book.id} className="book-card">
+          
+          {/* Cover or fallback title */}
+          {book.frontCover ? (
+            <div
+              className="book-cover"
+              style={{ backgroundImage: `url(${book.frontCover})` }}
+              aria-label={book.title}
+            />
+          ) : (
+            <h4 className="no-cover">{book.title}</h4>
+          )}
 
-              {/* Category Assignment Dropdown */}
-              <div className="assign-category">
-                <label>Assign to Category:</label>
-                <select
-                  onChange={(e) => handleAssignCategory(book.id, e.target.value)}
-                  defaultValue=""
-                >
-                  <option value="" disabled>Select category</option>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                  ))}
-                </select>
-              </div>
+          {/* Edit & Delete buttons */}
+          <div className="book-actions">
+            <button className="library-edit-btn" onClick={() => onEditBook(book)}>Edit</button>
+            <button className="library-delete-btn" onClick={() => handleDeleteBook(book.id)}>Delete</button>
+          </div>
 
-            </div>
-          ))
-        )}
-      </div>
+          {/* Categories as tags */}
+          <div className="category-tags">
+            {book.categories?.map(catId => {
+              const cat = categories.find(c => c.id === catId);
+              return cat ? <span key={catId} className="tag">{cat.name}</span> : null;
+            })}
+          </div>
+
+          {/* React Select Dropdown */}
+          <Select
+            options={categories.map(cat => ({ value: cat.id, label: cat.name }))}
+            onChange={(selected) => handleAssignCategory(book.id, selected.value)}
+            placeholder="Assign to category..."
+            className="category-select"
+
+            styles={{
+              placeholder: (provided) => ({
+                ...provided,
+                fontSize: "12px",   // smaller font
+                whiteSpace: "nowrap", // prevent line break
+              }),
+              control: (provided) => ({
+                ...provided,
+                minHeight: "32px", // make the dropdown a bit smaller
+              }),
+              valueContainer: (provided) => ({
+                ...provided,
+                padding: "0 6px", // tighten spacing
+              }),
+              input: (provided) => ({
+                ...provided,
+                fontSize: "12px", // make typed text match
+              }),
+              singleValue: (provided) => ({
+                ...provided,
+                fontSize: "12px", // ensure selected option matches placeholder size
+              }),
+
+              menu: (provided) => ({
+                ...provided,
+                fontSize: "12px",   // dropdown font size
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                fontSize: "12px",   // individual option size
+                padding: "6px 10px", // tighter spacing
+              })
+            }}
+          />
+        </div>
+      ))}
     </div>
   );
-};
+}
 
 export default Library;

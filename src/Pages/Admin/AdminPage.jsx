@@ -418,7 +418,9 @@ function AdminPage() {
 
             <Library books={books} onDelete={handleDeleteBook} onEdit={handleEditBook}/>
 
-            <Category/>
+            <div style={{marginTop:'24px'}}>
+                <Category/>
+            </div>
 
             
         </div>
