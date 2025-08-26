@@ -1,0 +1,73 @@
+#category-input {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+#category-button {
+  padding: 8px 16px;
+  background-color: rgba(168, 11, 168, 0.925);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.category-card {
+  background-color: #f3f3f3;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 500;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  background-color: rgba(168, 11, 168, 0.08);
+}
+
+/* Action buttons */
+.edit-btn, .delete-btn, .save-btn, .cancel-btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.edit-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.delete-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.save-btn {
+  background: #16a34a;
+  color: white;
+}
+
+.cancel-btn {
+  background: #6b7280;
+  color: white;
+}
+
+.edit-input {
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}

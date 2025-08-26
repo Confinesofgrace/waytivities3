@@ -15,6 +15,7 @@ import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { updateDoc } from 'firebase/firestore';
 
 import Library from '../../Components/Library';
+import Category from '../../Components/Category';
 
 
 
@@ -416,6 +417,8 @@ function AdminPage() {
             </div>
 
             <Library books={books} onDelete={handleDeleteBook} onEdit={handleEditBook}/>
+
+            <Category/>
 
             
         </div>
