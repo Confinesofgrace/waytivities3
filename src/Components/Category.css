@@ -1,9 +1,11 @@
-#category-input {
+#category-input 
+{
   padding: 8px;
   margin-right: 10px;
 }
 
-#category-button {
+#category-button 
+{
   padding: 8px 16px;
   background-color: rgba(168, 11, 168, 0.925);
   color: white;
@@ -12,7 +14,8 @@
   cursor: pointer;
 }
 
-.category-list {
+.category-list 
+{
   display: flex;
   flex-wrap: wrap;
   gap: 10px;

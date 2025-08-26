@@ -49,7 +49,7 @@ function Library({ books, onEditBook }) {
           {/* Cover or fallback title */}
           {book.frontCover ? (
             <div
-              className="book-cover"
+              className="book-cover" // similar styling with Book preview
               style={{ backgroundImage: `url(${book.frontCover})` }}
               aria-label={book.title}
             />
