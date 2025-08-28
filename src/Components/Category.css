@@ -41,7 +41,7 @@
 }
 
 /* Action buttons */
-.edit-btn, .delete-btn, .save-btn, .cancel-btn {
+.category-edit-btn, .category-delete-btn, .save-btn, .cancel-btn {
   padding: 4px 8px;
   border: none;
   border-radius: 4px;

@@ -63,13 +63,14 @@ function Library({ books, onEditBook }) {
             <button className="library-delete-btn" onClick={() => handleDeleteBook(book.id)}>Delete</button>
           </div>
 
-          {/* Categories as tags */}
+          {/* Categories as tags 
           <div className="category-tags">
             {book.categories?.map(catId => {
               const cat = categories.find(c => c.id === catId);
               return cat ? <span key={catId} className="tag">{cat.name}</span> : null;
             })}
           </div>
+          */}
 
           {/* React Select Dropdown */}
           <Select
