@@ -4,6 +4,7 @@ import { db } from '../../firebaseConfig';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import './Books.css';
 import BookListsPreview from "../../Components/BookListsPreview";
+
 import Footer from '../../Components/Footer';
 
 function Books() {
@@ -95,7 +96,8 @@ function Books() {
                     )}
                 </div>
                 <div id='booklists'>
-                    <BookListsPreview books={books} onBookClick={handleBookClick} />
+                   <BookListsPreview books={books} onBookClick={handleBookClick} />
+
                 </div>
 
             </div>

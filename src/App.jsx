@@ -12,27 +12,31 @@ import AdminPage from './Pages/Admin/AdminPage';
 import { AuthProvider } from './Components/AuthContext';
 import Cart from './Pages/Cart/Cart';
 
+import { CartProvider } from "./Components/CartContext";
+
 
 function App() {
   return (
     <AuthProvider> 
       <BookProvider>
-        <BrowserRouter>
-          <main>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/books" element={<Books />} />
-              <Route path="/books/:bookId" element={<Books />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/adminpage" element={<AdminPage />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/cart" element={<Cart/>} />
-            </Routes>
-          </main>
-        </BrowserRouter>
+        <CartProvider> 
+          <BrowserRouter>
+            <main>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/books" element={<Books />} />
+                <Route path="/books/:bookId" element={<Books />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/adminpage" element={<AdminPage />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<LogIn />} />
+                <Route path="/cart" element={<Cart/>} />
+              </Routes>
+            </main>
+          </BrowserRouter>
+        </CartProvider>
       </BookProvider>
     </AuthProvider>
   );

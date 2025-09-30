@@ -6,6 +6,7 @@ import "./BookPreview.css";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { TiArrowRightThick,TiArrowLeftThick } from "react-icons/ti";
 
+import { useCart } from "./CartContext";
 
 
 function BookPreview() {
@@ -47,6 +48,8 @@ function BookPreview() {
     }
   };
 
+  const { addToCart } = useCart();
+
   return (
     <div id="body-bookPreview">
       <h1 style={{ marginBottom: "15px" }}>
@@ -78,17 +81,26 @@ function BookPreview() {
               className="scroll-container"
               ref={(el) => (scrollRefs.current[category.id] = el)}
             >
-              <div className="preview">
-                {filteredBooks.map((book) => (
+            <div className="preview">
+              {filteredBooks.map((book) => (
+                <div key={book.id} className="book-item">
                   <Link
-                    key={book.id}
                     to={`/books/${book.id}`}
                     className="book-cover"
                     style={{ backgroundImage: `url(${book.frontCover})` }}
                     title={book.title}
                   />
-                ))}
-              </div>
+                  
+                  <button
+                    className="add-to-cart"
+                    onClick={() => addToCart(book)}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              ))}
+            </div>
+
             </div>
 
             <button
@@ -105,6 +117,7 @@ function BookPreview() {
           </div>
         );
       })}
+      
     </div>
   );
 }
