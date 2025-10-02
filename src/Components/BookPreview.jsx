@@ -91,6 +91,8 @@ function BookPreview() {
                     title={book.title}
                   />
                   
+                  <p className="book-price">₦{book.price?.toLocaleString()}</p>
+
                   <button
                     className="add-to-cart"
                     onClick={() => addToCart(book)}

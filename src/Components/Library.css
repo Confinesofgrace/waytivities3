@@ -54,6 +54,15 @@
   font-size: 14px;
 }
 
+.book-price 
+{
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c075c;
+  margin: 6px 0 0 0;
+}
+
+
 .book-actions 
 {
   width: 100%;

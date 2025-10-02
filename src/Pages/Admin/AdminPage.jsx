@@ -204,6 +204,7 @@ function AdminPage() {
         const bookData = {
             title,
             author,
+            price: parseFloat(price) || 0, 
             frontCover: coverUrl,
             aboutBook: aboutBookContent || '',
             trailer: trailerContent || '',
@@ -240,6 +241,9 @@ function AdminPage() {
             console.error("Error saving book:", err);
             alert("Failed to save book.");
         }
+
+        setPrice('');
+
     };
 
     const [books, setBooks] = useState([]);
@@ -275,16 +279,22 @@ function AdminPage() {
     };
 
     const handleEditBook = (book) => {
-    setEditingBookId(book.id);
-    setTitle(book.title || '');
-    setFrontCover(book.frontCover || '');
-    setCoverPreview(book.frontCover || '');
-    setBookFile(book.bookFile || '');
-    setTrailer(book.trailer || '');
-    setAboutBook(book.aboutBook || '');
+        setEditingBookId(book.id);
+        setTitle(book.title || "");
+        setAuthor(book.author || "");
+        setPrice(book.price || "");
+        setCoverUrl(book.frontCover || "");
+        setCoverPreview(book.frontCover || ""); // show current cover
+        setAboutBookContent(book.aboutBook || "");
+        setTrailerContent(book.trailer || "");
+        setBookContent(book.book || "");
     };
 
+
     const [editingBookId, setEditingBookId] = useState(null);
+
+    const [price, setPrice] = useState('');
+
 
 
 
@@ -327,6 +337,21 @@ function AdminPage() {
                             />
  
                         </div>
+
+                        <div className='for-input1'>
+                            <label htmlFor="price" className='admin-label'>Price (&#8358;)</label>
+                            <input
+                                id='for-admin-input'
+                                type='number'
+                                min="0"
+                                step="0.01"
+                                name='price'
+                                placeholder='Enter price'
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                            />
+                        </div>
+
                                           
 
                     </div>
