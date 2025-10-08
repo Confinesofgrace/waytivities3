@@ -7,14 +7,13 @@ export function CartProvider({ children }) {
 
   const addToCart = (book) => {
     setCart((prev) => {
-      // if book already in cart, increase quantity
       const existing = prev.find((item) => item.id === book.id);
       if (existing) {
         return prev.map((item) =>
-          item.id === book.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === book.id ? { ...item, qty: item.qty + 1 } : item
         );
       }
-      return [...prev, { ...book, quantity: 1 }];
+      return [...prev, { ...book, qty: 1, format: "paperback" }]; // default paperback
     });
   };
 
@@ -22,16 +21,28 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const updateQuantity = (id, quantity) => {
+  const updateQty = (id, qty) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
+        item.id === id ? { ...item, qty: Math.max(1, qty) } : item
+      )
+    );
+  };
+
+  const updateFormat = (id, format) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, format, qty: format === "pdf" ? 1 : item.qty } // reset to 1 if pdf
+          : item
       )
     );
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, updateQty, updateFormat }}
+    >
       {children}
     </CartContext.Provider>
   );
