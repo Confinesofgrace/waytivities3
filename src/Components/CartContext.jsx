@@ -5,6 +5,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
+  // 🛒 Add item to cart
   const addToCart = (book) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === book.id);
@@ -13,14 +14,17 @@ export function CartProvider({ children }) {
           item.id === book.id ? { ...item, qty: item.qty + 1 } : item
         );
       }
-      return [...prev, { ...book, qty: 1, format: "paperback" }]; // default paperback
+      // Default: add with PDF format selected initially
+      return [...prev, { ...book, qty: 1, formats: ["pdf"] }];
     });
   };
 
+  // ❌ Remove item from cart
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
+  // 🔢 Update quantity
   const updateQty = (id, qty) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -29,13 +33,27 @@ export function CartProvider({ children }) {
     );
   };
 
-  const updateFormat = (id, format) => {
+  // 🧩 Update format selection (PDF / Paperback / Both)
+  const updateFormat = (id, formatType, checked) => {
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, format, qty: format === "pdf" ? 1 : item.qty } // reset to 1 if pdf
-          : item
-      )
+      prev.map((item) => {
+        if (item.id === id) {
+          let updatedFormats = item.formats || [];
+
+          if (checked) {
+            // Add format if not already selected
+            if (!updatedFormats.includes(formatType)) {
+              updatedFormats.push(formatType);
+            }
+          } else {
+            // Remove format if unchecked
+            updatedFormats = updatedFormats.filter((f) => f !== formatType);
+          }
+
+          return { ...item, formats: updatedFormats };
+        }
+        return item;
+      })
     );
   };
 

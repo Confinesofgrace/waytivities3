@@ -21,6 +21,50 @@
   border-bottom: 1px solid #eee;
 }
 
+/* ====== Modern Pill Toggle Buttons (Vertical Stack) ====== */
+.format {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Hide checkbox itself */
+.format input[type="checkbox"] {
+  display: none;
+}
+
+/* Base label style */
+.format label 
+{
+  width: 40%;
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  cursor: pointer;
+  background: #f9f9f9;
+  color: #555;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* Checked state (active) */
+.format input[type="checkbox"]:checked + label {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+  transform: scale(1.02);
+}
+
+/* Hover effect */
+.format label:hover {
+  background: #e6f0ff;
+  border-color: #007bff;
+  color: #007bff;
+}
+
 /* -------- Responsive -------- */
 @media (max-width: 900px) {
   #cart-layout > div {
@@ -74,5 +118,15 @@
   #your-cart .cart-row > div.quantity,
   #your-cart .cart-row > div.total {
     justify-content: flex-start;
+  }
+
+  .format {
+    flex-direction: row; /* side by side for mobile */
+    justify-content: center;
+  }
+
+  .format label {
+    width: auto;
+    padding: 6px 12px;
   }
 }

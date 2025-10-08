@@ -1,9 +1,13 @@
 import { useCart } from "../../Components/CartContext";
-import OrderSummary from '../../Components/OrderSummary';
-import './Cart.css';
+import OrderSummary from "../../Components/OrderSummary";
+import "./Cart.css";
 
 function Cart() {
   const { cart, updateQty, removeFromCart, updateFormat } = useCart();
+
+  const handleFormatChange = (itemId, formatType, checked) => {
+    updateFormat(itemId, formatType, checked); // updateFormat now takes 3 args
+  };
 
   return (
     <div id="page-layout">
@@ -32,61 +36,89 @@ function Cart() {
             <div>
               {cart.length === 0 ? (
                 <p style={{ padding: "24px", textAlign: "center" }}>
-                  Your cart is empty.  
-                  <a href="/books" style={{ color: "#007bff", marginLeft: "6px" }}>Continue Shopping</a>
+                  Your cart is empty.
+                  <a
+                    href="/books"
+                    style={{ color: "#007bff", marginLeft: "6px" }}
+                  >
+                    Continue Shopping
+                  </a>
                 </p>
               ) : (
                 cart.map((item) => {
-                  const isPdf = item.format === "pdf";
+                  const hasPdf = item.formats?.includes("pdf");
+                  const hasPaperback = item.formats?.includes("paperback");
+
+                  const totalPrice =
+                    (hasPdf ? item.price : 0) +
+                    (hasPaperback ? item.price * item.qty : 0);
 
                   return (
                     <div key={item.id} className="cart-row">
                       {/* Product Info */}
-                      <div style={{ width: "40%", display: "flex", alignItems: "center", gap: "12px" }}>
+                      <div
+                        style={{
+                          width: "40%",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                        }}
+                      >
                         <img
                           src={item.frontCover}
                           alt={item.title}
-                          style={{ width: "60px", height: "80px", objectFit: "cover", borderRadius: "4px" }}
+                          style={{
+                            width: "60px",
+                            height: "80px",
+                            objectFit: "cover",
+                            borderRadius: "4px",
+                          }}
                         />
                         <div>
-                          <p style={{ margin: 0, fontWeight: "bold" }}>{item.title}</p>
-                          <p style={{ margin: 0, fontSize: "13px" }}>₦{item.price.toLocaleString()}</p>
-                          <button 
-                            onClick={() => removeFromCart(item.id)} 
-                            style={{ fontSize: "12px", color: "red", background: "none", border: "none", cursor: "pointer" }}
+                          <p style={{ margin: 0, fontWeight: "bold" }}>
+                            {item.title}
+                          </p>
+                          <p style={{ margin: 0, fontSize: "13px" }}>
+                            ₦{item.price.toLocaleString()}
+                          </p>
+                          <button
+                            onClick={() => removeFromCart(item.id)}
+                            style={{
+                              fontSize: "12px",
+                              color: "red",
+                              background: "none",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
                           >
                             Remove
                           </button>
                         </div>
                       </div>
 
-                      {/* Format Toggle */}
-                      <div className="format" style={{ width: "25%", fontSize: "13px" }}>
-                        <label>
+                      {/* Format Checkboxes */}
+                      <div className="format" style={{ width: "25%" }}>
                           <input
-                            type="radio"
-                            name={`format-${item.id}`}
-                            value="pdf"
-                            checked={isPdf}
-                            onChange={() => updateFormat(item.id, "pdf")}
+                            type="checkbox"
+                            id={`pdf-${item.id}`}
+                            checked={hasPdf}
+                            onChange={(e) => handleFormatChange(item.id, "pdf", e.target.checked)}
                           />
-                          PDF
-                        </label>
-                        <label style={{ marginLeft: "10px" }}>
+                          <label htmlFor={`pdf-${item.id}`}>PDF</label>
+
                           <input
-                            type="radio"
-                            name={`format-${item.id}`}
-                            value="paperback"
-                            checked={!isPdf}
-                            onChange={() => updateFormat(item.id, "paperback")}
+                            type="checkbox"
+                            id={`paperback-${item.id}`}
+                            checked={hasPaperback}
+                            onChange={(e) => handleFormatChange(item.id, "paperback", e.target.checked)}
                           />
-                          Paperback
-                        </label>
+                          <label htmlFor={`paperback-${item.id}`}>Paperback</label>
                       </div>
+
 
                       {/* Quantity */}
                       <div className="quantity" style={{ width: "20%" }}>
-                        {!isPdf && (
+                        {hasPaperback && (
                           <input
                             type="number"
                             min="1"
@@ -101,8 +133,11 @@ function Cart() {
                       </div>
 
                       {/* Total */}
-                      <div className="total" style={{ marginLeft: "auto", fontWeight: "bold" }}>
-                        ₦{(item.price * (isPdf ? 1 : item.qty)).toLocaleString()}
+                      <div
+                        className="total"
+                        style={{ marginLeft: "auto", fontWeight: "bold" }}
+                      >
+                        ₦{totalPrice.toLocaleString()}
                       </div>
                     </div>
                   );
