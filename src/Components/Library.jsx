@@ -119,6 +119,13 @@ function Library({ books, onEditBook }) {
               })
             }}
           />
+
+          <div style={{ marginTop: '6px', fontSize: '12px' }}>
+            <strong>Formats:</strong>{" "}
+            {book.availableFormats?.pdf && <span>📘 PDF </span>}
+            {book.availableFormats?.paperback && <span>📗 Paperback</span>}
+          </div>
+
         </div>
       ))}
     </div>

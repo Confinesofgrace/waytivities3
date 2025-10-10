@@ -6,7 +6,7 @@ function Cart() {
   const { cart, updateQty, removeFromCart, updateFormat } = useCart();
 
   const handleFormatChange = (itemId, formatType, checked) => {
-    updateFormat(itemId, formatType, checked); // updateFormat now takes 3 args
+    updateFormat(itemId, formatType, checked);
   };
 
   return (
@@ -46,12 +46,14 @@ function Cart() {
                 </p>
               ) : (
                 cart.map((item) => {
-                  const hasPdf = item.formats?.includes("pdf");
-                  const hasPaperback = item.formats?.includes("paperback");
+                  const hasPdf = item.availableFormats?.pdf;
+                  const hasPaperback = item.availableFormats?.paperback;
+
 
                   const totalPrice =
-                    (hasPdf ? item.price : 0) +
-                    (hasPaperback ? item.price * item.qty : 0);
+                    (item.format?.pdf ? item.price : 0) +
+                    (item.format?.paperback ? item.price * item.qty : 0);
+
 
                   return (
                     <div key={item.id} className="cart-row">
@@ -96,29 +98,43 @@ function Cart() {
                         </div>
                       </div>
 
-                      {/* Format Checkboxes */}
+                      {/* Format Checkboxes (stacked vertically) */}
                       <div className="format" style={{ width: "25%" }}>
-                          <input
-                            type="checkbox"
-                            id={`pdf-${item.id}`}
-                            checked={hasPdf}
-                            onChange={(e) => handleFormatChange(item.id, "pdf", e.target.checked)}
-                          />
-                          <label htmlFor={`pdf-${item.id}`}>PDF</label>
+                          {hasPdf && (
+                            <>
+                              <input
+                                type="checkbox"
+                                id={`pdf-${item.id}`}
+                                checked={item.format?.pdf || false}
+                                onChange={(e) =>
+                                  handleFormatChange(item.id, "pdf", e.target.checked)
+                                }
+                              />
+                              <label htmlFor={`pdf-${item.id}`}>PDF</label>
+                            </>
+                          )}
 
-                          <input
-                            type="checkbox"
-                            id={`paperback-${item.id}`}
-                            checked={hasPaperback}
-                            onChange={(e) => handleFormatChange(item.id, "paperback", e.target.checked)}
-                          />
-                          <label htmlFor={`paperback-${item.id}`}>Paperback</label>
+                          {hasPaperback && (
+                            <>
+                              <input
+                                type="checkbox"
+                                id={`paperback-${item.id}`}
+                                checked={item.format?.paperback || false}
+                                onChange={(e) =>
+                                  handleFormatChange(item.id, "paperback", e.target.checked)
+                                }
+                              />
+                              <label htmlFor={`paperback-${item.id}`}>Paperback</label>
+                            </>
+                          )}
                       </div>
+
 
 
                       {/* Quantity */}
                       <div className="quantity" style={{ width: "20%" }}>
-                        {hasPaperback && (
+                        {/* 👇 Only show when paperback is selected */}
+                        {item.format?.paperback && (
                           <input
                             type="number"
                             min="1"
@@ -131,6 +147,7 @@ function Cart() {
                           />
                         )}
                       </div>
+
 
                       {/* Total */}
                       <div

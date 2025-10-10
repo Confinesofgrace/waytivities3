@@ -1,27 +1,126 @@
-#order-summary
-{
-    background-color: rgb(249, 242, 250);
-    padding: 8px;
-    border-radius: 8px;
+#order-summary {
+  background-color: rgb(249, 242, 250);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  height: 450px; /* fixed height for scroll + visible footer */
 }
 
-#checkout
-{
-    background-color: rgb(88, 88, 245);
-    display:flex;
-    justify-content:center;
-    padding: 14px 0px;
-    cursor: pointer;
-
-    margin-top:'20px';
+.order-summary-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+  text-align: center;
 }
 
-#checkout button
-{
-    
-    font-size: 12px;
-    background: #dddddd00;
-    border: none;
-    cursor: pointer;
-    color: white;
+/* ✅ Scrollable items */
+.order-items {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding-right: 6px;
+}
+
+.order-items::-webkit-scrollbar {
+  width: 6px;
+}
+.order-items::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 3px;
+}
+
+/* ✅ Each item displayed as card */
+.order-item-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.item-title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.item-details p {
+  font-size: 13px;
+  margin: 2px 0;
+  color: #555;
+}
+
+/* ✅ Summary and Checkout always visible */
+.summary-footer {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  background-color: rgb(249, 242, 250);
+}
+
+.summary-section {
+  margin-bottom: 14px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.summary-row.total {
+  font-weight: 600;
+  border-top: 1px solid #ddd;
+  padding-top: 6px;
+}
+
+#checkout {
+  display: flex;
+  justify-content: center;
+}
+
+#checkout button {
+  font-size: 14px;
+  background-color: rgb(88, 88, 245);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: background-color 0.25s ease, transform 0.1s ease;
+}
+
+#checkout button:hover:not(:disabled) {
+  background-color: rgb(60, 60, 220);
+  transform: scale(1.02);
+}
+
+#checkout button:disabled {
+  background-color: #ccc;
+  color: #666;
+  opacity: 0.7;
+  /* cursor: not-allowed; */
+}
+
+.empty-cart {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin-top: 40px;
 }

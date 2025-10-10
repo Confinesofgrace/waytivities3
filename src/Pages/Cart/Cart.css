@@ -21,10 +21,10 @@
   border-bottom: 1px solid #eee;
 }
 
-/* ====== Modern Pill Toggle Buttons (Vertical Stack) ====== */
+/* ====== Vertical Pill Toggle Buttons ====== */
 .format {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack vertically */
   align-items: flex-start;
   gap: 8px;
 }
@@ -35,10 +35,9 @@
 }
 
 /* Base label style */
-.format label 
-{
-  width: 40%;
-  padding: 4px 10px;
+.format label {
+  width: 100%;
+  padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 999px;
   cursor: pointer;
@@ -47,6 +46,7 @@
   font-size: 12px;
   font-weight: 500;
   transition: all 0.25s ease;
+  text-align: center;
 }
 
 /* Checked state (active) */
@@ -68,7 +68,7 @@
 /* -------- Responsive -------- */
 @media (max-width: 900px) {
   #cart-layout > div {
-    flex-direction: column; /* stack cart + summary */
+    flex-direction: column;
   }
 
   #your-cart {
@@ -87,11 +87,11 @@
   }
 
   #product-title {
-    display: none; /* hide header row, mobile looks cleaner */
+    display: none;
   }
 
   #your-cart .cart-row {
-    flex-direction: column; /* stack everything */
+    flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
@@ -106,7 +106,6 @@
     font-size: 14px;
   }
 
-  /* Format + Quantity + Total stack neatly below product */
   #your-cart .cart-row > div {
     width: 100% !important;
     display: flex;
@@ -120,13 +119,14 @@
     justify-content: flex-start;
   }
 
+  /* ✅ Keep formats stacked vertically even on mobile */
   .format {
-    flex-direction: row; /* side by side for mobile */
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .format label {
-    width: auto;
-    padding: 6px 12px;
+    width: 100%;
+    text-align: center;
   }
 }

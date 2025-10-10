@@ -204,13 +204,15 @@ function AdminPage() {
         const bookData = {
             title,
             author,
-            price: parseFloat(price) || 0, 
+            price: parseFloat(price) || 0,
             frontCover: coverUrl,
             aboutBook: aboutBookContent || '',
             trailer: trailerContent || '',
             book: bookContent || '',
-            createdAt: new Date()
+            availableFormats,  // 👈 Add this line
+            createdAt: new Date(),
         };
+
 
         try {
             if (editingBookId){
@@ -295,8 +297,10 @@ function AdminPage() {
 
     const [price, setPrice] = useState('');
 
-
-
+    const [availableFormats, setAvailableFormats] = useState({
+        pdf: true,
+        paperback: false,
+    });
 
         
 
@@ -352,7 +356,36 @@ function AdminPage() {
                             />
                         </div>
 
-                                          
+                        <div className='for-input1'>
+                            <label className='admin-label'>Available Formats</label>
+                            <div style={{ display: 'flex', gap: '16px', marginTop: '6px' }}>
+                                <label>
+                                <input
+                                    type='checkbox'
+                                    checked={availableFormats.pdf}
+                                    onChange={(e) =>
+                                    setAvailableFormats((prev) => ({ ...prev, pdf: e.target.checked }))
+                                    }
+                                />{" "}
+                                PDF
+                                </label>
+
+                                <label>
+                                <input
+                                    type='checkbox'
+                                    checked={availableFormats.paperback}
+                                    onChange={(e) =>
+                                    setAvailableFormats((prev) => ({
+                                        ...prev,
+                                        paperback: e.target.checked,
+                                    }))
+                                    }
+                                />{" "}
+                                Paperback
+                                </label>
+                            </div>
+                        </div>
+                 
 
                     </div>
             

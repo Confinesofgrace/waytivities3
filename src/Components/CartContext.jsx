@@ -14,10 +14,19 @@ export function CartProvider({ children }) {
           item.id === book.id ? { ...item, qty: item.qty + 1 } : item
         );
       }
-      // Default: add with PDF format selected initially
-      return [...prev, { ...book, qty: 1, formats: ["pdf"] }];
+
+      // Default: only PDF selected, paperback not selected yet
+      return [
+        ...prev,
+        {
+          ...book,
+          qty: 1,
+          format: { pdf: true, paperback: false }, // ✅ default PDF only
+        },
+      ];
     });
   };
+
 
   // ❌ Remove item from cart
   const removeFromCart = (id) => {
@@ -37,25 +46,20 @@ export function CartProvider({ children }) {
   const updateFormat = (id, formatType, checked) => {
     setCart((prev) =>
       prev.map((item) => {
-        if (item.id === id) {
-          let updatedFormats = item.formats || [];
+        if (item.id !== id) return item;
 
-          if (checked) {
-            // Add format if not already selected
-            if (!updatedFormats.includes(formatType)) {
-              updatedFormats.push(formatType);
-            }
-          } else {
-            // Remove format if unchecked
-            updatedFormats = updatedFormats.filter((f) => f !== formatType);
-          }
+        // Update the specific format (pdf/paperback)
+        const newFormats = { ...item.format, [formatType]: checked };
 
-          return { ...item, formats: updatedFormats };
-        }
-        return item;
+        // If only PDF is selected → qty = 1 (since no multiple copies of a digital file)
+        const newQty =
+          newFormats.pdf && !newFormats.paperback ? 1 : item.qty;
+
+        return { ...item, format: newFormats, qty: newQty };
       })
     );
   };
+
 
   return (
     <CartContext.Provider
