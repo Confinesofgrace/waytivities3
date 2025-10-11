@@ -14,33 +14,23 @@ function Cart() {
       <div id="cart-layout">
         <h4>Your Cart</h4>
 
-        <div className="cart-container" style={{ display: "flex", gap: "24px" }}>
-          {/* Left: Cart Items */}
+        <div className="cart-container">
+          {/* ===== Left: Cart Items ===== */}
           <div id="your-cart">
+            {/* Header Row */}
             <div id="product-title">
-              <div style={{ width: "40%" }}>
-                <p>Product</p>
-              </div>
-              <div style={{ width: "25%" }}>
-                <p>Format</p>
-              </div>
-              <div style={{ width: "20%" }}>
-                <p>Quantity</p>
-              </div>
-              <div style={{ marginLeft: "auto" }}>
-                <p>Total</p>
-              </div>
+              <div>Product</div>
+              <div>Format</div>
+              <div>Quantity</div>
+              <div>Total</div>
             </div>
 
-            {/* Cart Items */}
-            <div>
+            {/* Cart Rows */}
+            <div className="cart-scroll-area">
               {cart.length === 0 ? (
-                <p style={{ padding: "24px", textAlign: "center" }}>
+                <p className="empty-cart">
                   Your cart is empty.
-                  <a
-                    href="/books"
-                    style={{ color: "#007bff", marginLeft: "6px" }}
-                  >
+                  <a href="/books" className="continue-link">
                     Continue Shopping
                   </a>
                 </p>
@@ -49,111 +39,74 @@ function Cart() {
                   const hasPdf = item.availableFormats?.pdf;
                   const hasPaperback = item.availableFormats?.paperback;
 
-
                   const totalPrice =
                     (item.format?.pdf ? item.price : 0) +
                     (item.format?.paperback ? item.price * item.qty : 0);
 
-
                   return (
                     <div key={item.id} className="cart-row">
                       {/* Product Info */}
-                      <div
-                        style={{
-                          width: "40%",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "12px",
-                        }}
-                      >
-                        <img
-                          src={item.frontCover}
-                          alt={item.title}
-                          style={{
-                            width: "60px",
-                            height: "80px",
-                            objectFit: "cover",
-                            borderRadius: "4px",
-                          }}
-                        />
-                        <div>
-                          <p style={{ margin: 0, fontWeight: "bold" }}>
-                            {item.title}
-                          </p>
-                          <p style={{ margin: 0, fontSize: "13px" }}>
-                            ₦{item.price.toLocaleString()}
-                          </p>
-                          <button
-                            onClick={() => removeFromCart(item.id)}
-                            style={{
-                              fontSize: "12px",
-                              color: "red",
-                              background: "none",
-                              border: "none",
-                              cursor: "pointer",
-                            }}
-                          >
+                      <div className="product-info">
+                        <img src={item.frontCover} alt={item.title} />
+                        <div className="product-text">
+                          <p className="title">{item.title}</p>
+                          <p className="price">₦{item.price.toLocaleString()}</p>
+                          <button onClick={() => removeFromCart(item.id)}>
                             Remove
                           </button>
                         </div>
                       </div>
 
-                      {/* Format Checkboxes (stacked vertically) */}
-                      <div className="format" style={{ width: "25%" }}>
-                          {hasPdf && (
-                            <>
-                              <input
-                                type="checkbox"
-                                id={`pdf-${item.id}`}
-                                checked={item.format?.pdf || false}
-                                onChange={(e) =>
-                                  handleFormatChange(item.id, "pdf", e.target.checked)
-                                }
-                              />
-                              <label htmlFor={`pdf-${item.id}`}>PDF</label>
-                            </>
-                          )}
-
-                          {hasPaperback && (
-                            <>
-                              <input
-                                type="checkbox"
-                                id={`paperback-${item.id}`}
-                                checked={item.format?.paperback || false}
-                                onChange={(e) =>
-                                  handleFormatChange(item.id, "paperback", e.target.checked)
-                                }
-                              />
-                              <label htmlFor={`paperback-${item.id}`}>Paperback</label>
-                            </>
-                          )}
+                      {/* Format */}
+                      <div className="format">
+                        {hasPdf && (
+                          <>
+                            <input
+                              type="checkbox"
+                              id={`pdf-${item.id}`}
+                              checked={item.format?.pdf || false}
+                              onChange={(e) =>
+                                handleFormatChange(item.id, "pdf", e.target.checked)
+                              }
+                            />
+                            <label htmlFor={`pdf-${item.id}`}>PDF</label>
+                          </>
+                        )}
+                        {hasPaperback && (
+                          <>
+                            <input
+                              type="checkbox"
+                              id={`paperback-${item.id}`}
+                              checked={item.format?.paperback || false}
+                              onChange={(e) =>
+                                handleFormatChange(
+                                  item.id,
+                                  "paperback",
+                                  e.target.checked
+                                )
+                              }
+                            />
+                            <label htmlFor={`paperback-${item.id}`}>Paperback</label>
+                          </>
+                        )}
                       </div>
 
-
-
                       {/* Quantity */}
-                      <div className="quantity" style={{ width: "20%" }}>
-                        {/* 👇 Only show when paperback is selected */}
+                      <div className="quantity">
                         {item.format?.paperback && (
                           <input
                             type="number"
                             min="1"
                             value={item.qty}
-                            onChange={(e) => {
-                              const value = Math.max(1, Number(e.target.value));
-                              updateQty(item.id, value);
-                            }}
-                            style={{ width: "60px", textAlign: "center" }}
+                            onChange={(e) =>
+                              updateQty(item.id, Math.max(1, Number(e.target.value)))
+                            }
                           />
                         )}
                       </div>
 
-
                       {/* Total */}
-                      <div
-                        className="total"
-                        style={{ marginLeft: "auto", fontWeight: "bold" }}
-                      >
+                      <div className="total">
                         ₦{totalPrice.toLocaleString()}
                       </div>
                     </div>
@@ -163,8 +116,8 @@ function Cart() {
             </div>
           </div>
 
-          {/* Right: Order Summary */}
-          <div className="order-summary" style={{ flex: "1", maxWidth: "350px" }}>
+          {/* ===== Right: Order Summary ===== */}
+          <div className="order-summary">
             <OrderSummary />
           </div>
         </div>
