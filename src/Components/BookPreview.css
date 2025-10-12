@@ -11,7 +11,7 @@
 .category-section 
 {
     position: relative;
-    padding: 10px 0;
+    padding: 4px 0;
 }
 
 .scroll-container 
@@ -147,22 +147,60 @@
 
 .add-to-cart 
 {
-    width: 80%;
-  background-color: rgba(128, 0, 128, 0.911);
+  width: 80%;
+  min-width: 130px;
+  background-color: #7a1fa2;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-top: 6px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   font-size: 13px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(122, 31, 162, 0.25);
 }
 
 .add-to-cart:hover 
 {
-  background-color: #1e4fc2;
+  background-color: #9b3fd0; /* Lighter purple for hover */
+  box-shadow: 0 4px 10px rgba(155, 63, 208, 0.35);
+  /*transform: translateY(-2px);*/
 }
+
+.add-to-cart.added 
+{
+  background-color: #4b0e66; /* deeper purple */
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(75, 14, 102, 0.35);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  
+}
+
+/* Slight success "pop" */
+.add-to-cart.added:active,
+.add-to-cart.added:hover {
+  transform: scale(1.02);
+}
+
+/* Optional pulse animation for feedback */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(75, 14, 102, 0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(75, 14, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(75, 14, 102, 0); }
+}
+
+.add-to-cart.added {
+  animation: pulse 1s ease;
+}
+
+
+
 
 
 
