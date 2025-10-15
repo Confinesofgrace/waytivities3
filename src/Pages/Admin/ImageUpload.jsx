@@ -1,15 +1,22 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-const ImageUpload = ({ label, onUpload }) => {
-  const [preview, setPreview] = useState(null);
+const ImageUpload = ({ label, onUpload, existingImage }) => {
+  const [preview, setPreview] = useState(existingImage || null);
   const [uploading, setUploading] = useState(false);
+
+  // Update preview when editing an existing book
+  useEffect(() => {
+    if (existingImage) {
+      setPreview(existingImage);
+    }
+  }, [existingImage]);
 
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
-    setPreview(URL.createObjectURL(file)); // preview before upload
+    setPreview(URL.createObjectURL(file));
     setUploading(true);
 
     const formData = new FormData();
@@ -27,7 +34,8 @@ const ImageUpload = ({ label, onUpload }) => {
 
       const data = await response.json();
       setUploading(false);
-      onUpload(data.secure_url); // Send Cloudinary URL back to parent
+      setPreview(data.secure_url);
+      onUpload(data.secure_url);
     } catch (error) {
       console.error("Upload failed:", error);
       setUploading(false);
@@ -36,10 +44,7 @@ const ImageUpload = ({ label, onUpload }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      "image/jpeg": [],
-      "image/png": [],
-    },
+    accept: { "image/jpeg": [], "image/png": [] },
     multiple: false,
   });
 
@@ -49,16 +54,24 @@ const ImageUpload = ({ label, onUpload }) => {
 
       <div {...getRootProps()} id="dropzone-area">
         <input {...getInputProps()} />
+
         {isDragActive ? (
           <p>Drop the image here...</p>
+        ) : uploading ? (
+          <p>Uploading...</p>
         ) : preview ? (
           <img
             src={preview}
-            alt="Preview"
-            style={{ width: "100%", borderRadius: "8px" }}
+            alt="Front Cover"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: "12px",
+            }}
           />
         ) : (
-          <p>{uploading ? "Uploading..." : "Drag & drop image here, or click to select"}</p>
+          <p>Drag & drop image here, or click to select</p>
         )}
       </div>
     </div>

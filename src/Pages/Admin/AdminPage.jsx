@@ -391,7 +391,15 @@ function AdminPage() {
             
                     
                     <div className="for-input1" id='for-cover'>
-                        <ImageUpload label="Front Cover" onUpload={(url) => setCoverUrl(url)} />
+                        <ImageUpload
+                            label="Front Cover"
+                            onUpload={(url) => setCoverUrl(url)}
+                            existingImage={coverUrl}
+                        />
+
+
+                        
+
                     </div>
 
 
@@ -474,7 +482,8 @@ function AdminPage() {
                 </button>
             </div>
 
-            <Library books={books} onDelete={handleDeleteBook} onEdit={handleEditBook}/>
+            <Library books={books} onEditBook={handleEditBook} />
+
 
             <div style={{marginTop:'24px'}}>
                 <Category/>

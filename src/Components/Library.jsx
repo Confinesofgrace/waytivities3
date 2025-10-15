@@ -64,7 +64,7 @@ function Library({ books, onEditBook }) {
 
           {/* Edit & Delete buttons */}
           <div className="book-actions">
-            <button className="library-edit-btn" onClick={() => onEdit(book)}>Edit</button>
+            <button className="library-edit-btn" onClick={() => onEditBook(book)}>Edit</button>
 
             <button className="library-delete-btn" onClick={() => handleDeleteBook(book.id)}>Delete</button>
           </div>
