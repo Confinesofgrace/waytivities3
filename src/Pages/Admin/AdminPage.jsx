@@ -155,6 +155,9 @@ function AdminPage() {
 
     const [coverUrl, setCoverUrl] = useState('');
 
+    const [resetImageField, setResetImageField] = useState(0);
+
+
     const extractTextFromFile = async (file) => {
         const fileType = file.type;
 
@@ -196,57 +199,58 @@ function AdminPage() {
 
 
     const handleSubmit = async () => {
-        if (!title || !author || !coverUrl) {
-            alert("Title, author, and front cover are required.");
-            return;
-        }
+  if (!title || !author || !coverUrl) {
+    alert("Title, author, and front cover are required.");
+    return;
+  }
 
-        const bookData = {
-            title,
-            author,
-            price: parseFloat(price) || 0,
-            frontCover: coverUrl,
-            aboutBook: aboutBookContent || '',
-            trailer: trailerContent || '',
-            book: bookContent || '',
-            availableFormats,  // 👈 Add this line
-            createdAt: new Date(),
-        };
+  const bookData = {
+    title,
+    author,
+    price: parseFloat(price) || 0,
+    frontCover: coverUrl,
+    aboutBook: aboutBookContent || '',
+    trailer: trailerContent || '',
+    book: bookContent || '',
+    availableFormats,  // 👈 Add this line
+    createdAt: new Date(),
+  };
 
+  try {
+    if (editingBookId) {
+      const bookRef = doc(db, 'books', editingBookId);
+      await updateDoc(bookRef, bookData);
+      alert("Book updated successfully!");
+    } else {
+      await addDoc(collection(db, 'books'), bookData);
+      alert("Book uploaded successfully!");
+    }
 
-        try {
-            if (editingBookId){
-                const bookRef = doc(db, 'books', editingBookId);
-                await updateDoc (bookRef, bookData);
-                alert("Book updated successfully!");
-            } else {
-                    await addDoc(collection(db, 'books'), bookData);
-                    alert("Book uploaded successfully!");
-            }
+    await fetchBooks(); // Refresh the library list
 
-            
+    // ✅ Reset the image upload field after successful upload/update
+    setResetImageField(prev => prev + 1); // triggers image reset
 
-            await fetchBooks(); // Refresh the library list
-            
-            setEditingBookId(null);
-            setTitle('');
-            setAuthor('');
-            setCoverUrl('');
-            setCoverPreview(null);
-            setAboutBookFile(null);
-            setTrailerFile(null);
-            setBookFile(null);
-            setAboutBookContent('');
-            setTrailerContent('');
-            setBookContent('');
-        } catch (err) {
-            console.error("Error saving book:", err);
-            alert("Failed to save book.");
-        }
+    // Reset all input fields
+    setEditingBookId(null);
+    setTitle('');
+    setAuthor('');
+    setCoverUrl('');
+    setCoverPreview(null);
+    setAboutBookFile(null);
+    setTrailerFile(null);
+    setBookFile(null);
+    setAboutBookContent('');
+    setTrailerContent('');
+    setBookContent('');
+  } catch (err) {
+    console.error("Error saving book:", err);
+    alert("Failed to save book.");
+  }
 
-        setPrice('');
+  setPrice('');
+};
 
-    };
 
     const [books, setBooks] = useState([]);
 
@@ -395,7 +399,9 @@ function AdminPage() {
                             label="Front Cover"
                             onUpload={(url) => setCoverUrl(url)}
                             existingImage={coverUrl}
+                            resetTrigger={resetImageField}
                         />
+
 
 
                         

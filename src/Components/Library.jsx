@@ -6,8 +6,8 @@ import "./Library.css";
 
 function Library({ books, onEditBook }) {
   const [categories, setCategories] = useState([]);
+  const [editingId, setEditingId] = useState(null); // ✅ track which book is being edited
 
-  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       const snapshot = await getDocs(collection(db, "categories"));
@@ -17,20 +17,16 @@ function Library({ books, onEditBook }) {
     fetchCategories();
   }, []);
 
-  // Assign category
   const handleAssignCategory = async (bookId, categoryId) => {
     const bookRef = doc(db, "books", bookId);
     try {
-      await updateDoc(bookRef, {
-        categories: arrayUnion(categoryId),
-      });
+      await updateDoc(bookRef, { categories: arrayUnion(categoryId) });
       alert("Category assigned!");
     } catch (err) {
       console.error("Error assigning category:", err);
     }
   };
 
-  // Delete book
   const handleDeleteBook = async (bookId) => {
     if (!window.confirm("Are you sure you want to delete this book?")) return;
     try {
@@ -41,15 +37,23 @@ function Library({ books, onEditBook }) {
     }
   };
 
+  // ✅ Handle edit with feedback
+  const handleEditClick = (book) => {
+    setEditingId(book.id);
+    onEditBook(book);
+    setTimeout(() => setEditingId(null), 1200); // remove highlight after 1.2s
+  };
+
   return (
     <div className="library-grid">
       {books.map(book => (
-        <div key={book.id} className="book-card">
-          
-          {/* Cover or fallback title */}
+        <div
+          key={book.id}
+          className={`book-card ${editingId === book.id ? "editing-highlight" : ""}`} // ✅ highlight feedback
+        >
           {book.frontCover ? (
             <div
-              className="book-cover" // similar styling with Book preview
+              className="book-cover"
               style={{ backgroundImage: `url(${book.frontCover})` }}
               aria-label={book.title}
             />
@@ -61,61 +65,58 @@ function Library({ books, onEditBook }) {
             <p className="book-price">₦{book.price.toLocaleString()}</p>
           )}
 
-
-          {/* Edit & Delete buttons */}
           <div className="book-actions">
-            <button className="library-edit-btn" onClick={() => onEditBook(book)}>Edit</button>
+            <button
+              className="library-edit-btn"
+              onClick={() => handleEditClick(book)}
+              disabled={editingId === book.id} // ✅ prevent multiple clicks
+            >
+              {editingId === book.id ? "Editing…" : "Edit"}
+            </button>
 
-            <button className="library-delete-btn" onClick={() => handleDeleteBook(book.id)}>Delete</button>
+            <button
+              className="library-delete-btn"
+              onClick={() => handleDeleteBook(book.id)}
+            >
+              Delete
+            </button>
           </div>
 
-          {/* Categories as tags 
-          <div className="category-tags">
-            {book.categories?.map(catId => {
-              const cat = categories.find(c => c.id === catId);
-              return cat ? <span key={catId} className="tag">{cat.name}</span> : null;
-            })}
-          </div>
-          */}
-
-          {/* React Select Dropdown */}
           <Select
             options={categories.map(cat => ({ value: cat.id, label: cat.name }))}
             onChange={(selected) => handleAssignCategory(book.id, selected.value)}
             placeholder="Assign to category..."
             className="category-select"
-
             styles={{
               placeholder: (provided) => ({
                 ...provided,
-                fontSize: "12px",   // smaller font
-                whiteSpace: "nowrap", // prevent line break
+                fontSize: "12px",
+                whiteSpace: "nowrap",
               }),
               control: (provided) => ({
                 ...provided,
-                minHeight: "32px", // make the dropdown a bit smaller
+                minHeight: "32px",
               }),
               valueContainer: (provided) => ({
                 ...provided,
-                padding: "0 6px", // tighten spacing
+                padding: "0 6px",
               }),
               input: (provided) => ({
                 ...provided,
-                fontSize: "12px", // make typed text match
+                fontSize: "12px",
               }),
               singleValue: (provided) => ({
                 ...provided,
-                fontSize: "12px", // ensure selected option matches placeholder size
+                fontSize: "12px",
               }),
-
               menu: (provided) => ({
                 ...provided,
-                fontSize: "12px",   // dropdown font size
+                fontSize: "12px",
               }),
               option: (provided, state) => ({
                 ...provided,
-                fontSize: "12px",   // individual option size
-                padding: "6px 10px", // tighter spacing
+                fontSize: "12px",
+                padding: "6px 10px",
               })
             }}
           />
@@ -125,7 +126,6 @@ function Library({ books, onEditBook }) {
             {book.availableFormats?.pdf && <span>📘 PDF </span>}
             {book.availableFormats?.paperback && <span>📗 Paperback</span>}
           </div>
-
         </div>
       ))}
     </div>

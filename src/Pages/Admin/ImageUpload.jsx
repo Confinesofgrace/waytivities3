@@ -60,16 +60,30 @@ const ImageUpload = ({ label, onUpload, existingImage }) => {
         ) : uploading ? (
           <p>Uploading...</p>
         ) : preview ? (
-          <img
-            src={preview}
-            alt="Front Cover"
+          <div
             style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
+              width: "200px",
+              height: "280px",
               borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
+              backgroundColor: "#fdf7ff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          />
+          >
+            <img
+              src={preview}
+              alt="Front Cover"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+
         ) : (
           <p>Drag & drop image here, or click to select</p>
         )}
