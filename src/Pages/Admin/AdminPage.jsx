@@ -71,20 +71,37 @@ function AdminPage() {
     multiple: false,
   });
 
-  const onBookDrop = useCallback((acceptedFiles) => {
+  const onBookDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     setBookFile(file);
 
-    const processFile = async () => {
-      try {
-        const content = await extractTextFromFile(file);
-        setBookContent(content);
-      } catch (err) {
-        console.error("Failed to extract book text:", err);
+    if (!file) return;
+
+    try {
+      // Upload to Cloudinary
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "Book covers"); 
+
+      const response = await fetch("https://api.cloudinary.com/v1_1/dfbqs0zcm/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.secure_url) {
+        setBookContent(data.secure_url); // Store book file URL
+        console.log("Book uploaded to Cloudinary:", data.secure_url);
+      } else {
+        throw new Error("Failed to upload to Cloudinary");
       }
-    };
-    processFile();
+    } catch (err) {
+      console.error("Error uploading book PDF:", err);
+      alert("Failed to upload book file.");
+    }
   }, []);
+
 
   const {
     getRootProps: getBookRootProps,
@@ -153,7 +170,7 @@ function AdminPage() {
       frontCover: coverUrl,
       aboutBook: aboutBookContent || '',
       trailer: trailerContent || '',
-      book: bookContent || '',
+      bookFileUrl: bookContent || '',
       availableFormats,
       createdAt: new Date(),
     };
@@ -213,7 +230,7 @@ function AdminPage() {
     setCoverPreview(book.frontCover || "");
     setAboutBookContent(book.aboutBook || "");
     setTrailerContent(book.trailer || "");
-    setBookContent(book.book || "");
+    setBookContent(book.bookFileUrl || "");
   };
 
   const modules = {
@@ -229,8 +246,10 @@ function AdminPage() {
     <div id="page-layout">
       <div id="adminPage-layout">
         <div id="book-upload">
-          <div className="admin-section" id="for-title">
-            <div className="for-input1">
+
+          {/* --- Top Row: Book Info + Cover Upload --- */}
+          <div className="book-info-section">
+            <div className="input-group">
               <label className="admin-label">Book Title</label>
               <input
                 id="for-admin-input"
@@ -241,7 +260,7 @@ function AdminPage() {
               />
             </div>
 
-            <div className="for-input1">
+            <div className="input-group">
               <label className="admin-label">Author</label>
               <input
                 id="for-admin-input"
@@ -252,7 +271,7 @@ function AdminPage() {
               />
             </div>
 
-            <div className="for-input1">
+            <div className="input-group">
               <label className="admin-label">Price (₦)</label>
               <input
                 id="for-admin-input"
@@ -266,7 +285,7 @@ function AdminPage() {
             </div>
           </div>
 
-          <div className="for-input1" id="for-cover">
+          <div className="cover-upload-section">
             <ImageUpload
               label="Front Cover"
               onUpload={(url) => setCoverUrl(url)}
@@ -275,8 +294,8 @@ function AdminPage() {
             />
           </div>
 
-          {/* ✅ About Book Rich Text Editor */}
-          <div className="for-input1" id="for-aboutBook">
+          {/* --- About Book --- */}
+          <div className="text-editor-section">
             <label className="admin-label">About Book</label>
             <ReactQuill
               theme="snow"
@@ -284,12 +303,12 @@ function AdminPage() {
               onChange={setAboutBookContent}
               modules={modules}
               placeholder="Write about the book..."
-              style={{ backgroundColor: "#fff", borderRadius: "8px", minHeight: "150px" }}
+              style={{ backgroundColor: "#fff", borderRadius: "8px", minHeight: "180px" }}
             />
           </div>
 
-          {/* ✅ Trailer Rich Text Editor */}
-          <div className="for-input1" id="for-intro">
+          {/* --- Trailer --- */}
+          <div className="text-editor-section">
             <label className="admin-label">Book Trailer</label>
             <ReactQuill
               theme="snow"
@@ -301,14 +320,15 @@ function AdminPage() {
             />
           </div>
 
-          <div className="for-input1" id="for-book">
-            <label className="admin-label">Book</label>
+          {/* --- Book Upload --- */}
+          <div className="file-upload-section">
+            <label className="admin-label">Book File</label>
             <div {...getBookRootProps()} id="dropzone-area">
               <input {...getBookInputProps()} />
               {isBookDragActive ? (
                 <p>Drop the 'Book' file here...</p>
               ) : (
-                <p>Drag & drop 'Book' file here, or click to select</p>
+                <p>Drag & drop book file here, or click to select</p>
               )}
               {bookFile && (
                 <div style={{ marginTop: '10px' }}>
@@ -317,7 +337,19 @@ function AdminPage() {
               )}
             </div>
           </div>
+
+          {bookContent && (
+            <div style={{ marginTop: "10px", color: "green" }}>
+              ✅ Book uploaded successfully!
+              <br />
+              <a href={bookContent} target="_blank" rel="noopener noreferrer">
+                View PDF
+              </a>
+            </div>
+          )}
+
         </div>
+
       </div>
 
       <div>
