@@ -22,6 +22,38 @@ function OrderSummary() {
     return acc + totalPrice;
   }, 0);
 
+  // Temporary handler for download
+  const handleDownload = () => {
+    if (selectedItems.length === 0) {
+      alert("Your cart is empty or no format selected!");
+      return;
+    }
+
+    // Filter for items with PDF format + valid book file
+    const downloadableBooks = selectedItems.filter(
+      (item) => item.format?.pdf && item.bookFileUrl
+    );
+
+    if (downloadableBooks.length === 0) {
+      alert("No downloadable PDF found for your selected items.");
+      return;
+    }
+
+    // Trigger download for each PDF item
+    downloadableBooks.forEach((item) => {
+      const link = document.createElement("a");
+      link.href = item.bookFileUrl;
+      link.download = `${item.title}.pdf`;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    alert("✅ Download started for your selected books!");
+  };
+
+  
   return (
     <div id="order-summary">
       <p className="order-summary-title">Order Summary</p>
@@ -66,11 +98,19 @@ function OrderSummary() {
         </div>
 
         <div id="checkout">
-          <button disabled={selectedItems.length === 0}>
+          <button
+            disabled={selectedItems.length === 0}
+            onClick={handleDownload}
+            className={selectedItems.length === 0 ? "disabled" : ""}
+          >
             Proceed to Checkout
           </button>
         </div>
       </div>
+
+      {console.log("CART ITEMS:", cart)}
+{console.log("SELECTED ITEMS:", selectedItems)}
+
     </div>
   );
 }

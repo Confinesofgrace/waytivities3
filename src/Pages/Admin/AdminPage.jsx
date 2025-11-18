@@ -12,6 +12,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.j
 import { db } from '../../firebaseConfig';
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
+// ✅ Import Firebase Storage
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import Library from '../../Components/Library';
 import Category from '../../Components/Category';
 
@@ -33,6 +36,9 @@ function AdminPage() {
     pdf: true,
     paperback: false,
   });
+
+  // ✅ Initialize Firebase Storage
+  const storage = getStorage();
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -71,36 +77,71 @@ function AdminPage() {
     multiple: false,
   });
 
-  const onBookDrop = useCallback(async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    setBookFile(file);
+const uploadPdfToCloudinary = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "book_pdf");
 
-    if (!file) return;
-
-    try {
-      // Upload to Cloudinary
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "Book covers"); 
-
-      const response = await fetch("https://api.cloudinary.com/v1_1/dfbqs0zcm/image/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.secure_url) {
-        setBookContent(data.secure_url); // Store book file URL
-        console.log("Book uploaded to Cloudinary:", data.secure_url);
-      } else {
-        throw new Error("Failed to upload to Cloudinary");
-      }
-    } catch (err) {
-      console.error("Error uploading book PDF:", err);
-      alert("Failed to upload book file.");
+  const response = await fetch(
+    "https://api.cloudinary.com/v1_1/dfbqs0zcm/auto/upload",
+    {
+      method: "POST",
+      body: formData,
     }
-  }, []);
+  );
+
+  const data = await response.json();
+  return data.secure_url;
+};
+
+
+  // ✅ Upload Book File to Firebase Storage (with success log + dynamic display)
+  /*
+const onBookDrop = useCallback(async (acceptedFiles) => {
+  const file = acceptedFiles[0];
+  setBookFile(file);
+  if (!file) return;
+
+  try {
+    const storageRef = ref(storage, `books/${file.name}`);
+    console.log("📤 Uploading book to Firebase Storage...");
+
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+
+    setBookContent(downloadURL);
+
+    console.log("✅ Book uploaded successfully! Download URL:", downloadURL);
+  } catch (err) {
+    console.error("❌ Error uploading to Firebase Storage:", err);
+    alert("Failed to upload book file.");
+  }
+}, [storage]);
+
+*/
+
+const onBookDrop = useCallback(async (acceptedFiles) => {
+  const file = acceptedFiles[0];
+  if (!file) return;
+
+  setBookFile(file);
+
+  
+  try {
+    console.log("📤 Uploading Book PDF to Cloudinary...");
+    const pdfUrl = await uploadPdfToCloudinary(file);
+
+    // Save PDF URL instantly
+    setBookContent(pdfUrl);
+
+    console.log("✅ Book uploaded successfully! URL:", pdfUrl);
+  } catch (err) {
+    console.error("❌ Cloudinary PDF Upload Failed:", err);
+    alert("Failed to upload book file.");
+  }
+}, []);
+
+
 
 
   const {
@@ -170,7 +211,7 @@ function AdminPage() {
       frontCover: coverUrl,
       aboutBook: aboutBookContent || '',
       trailer: trailerContent || '',
-      bookFileUrl: bookContent || '',
+      bookFileUrl: bookContent || "",
       availableFormats,
       createdAt: new Date(),
     };
@@ -196,7 +237,6 @@ function AdminPage() {
       setBookFile(null);
       setAboutBookContent('');
       setTrailerContent('');
-      setBookContent('');
       setPrice('');
     } catch (err) {
       console.error("Error saving book:", err);
@@ -339,17 +379,17 @@ function AdminPage() {
           </div>
 
           {bookContent && (
-            <div style={{ marginTop: "10px", color: "green" }}>
-              ✅ Book uploaded successfully!
-              <br />
-              <a href={bookContent} target="_blank" rel="noopener noreferrer">
-                View PDF
-              </a>
-            </div>
-          )}
+  <div style={{ marginTop: "10px", color: "green" }}>
+    ✅ Uploaded Successfully!
+    <br />
+    <a href={bookContent} target="_blank" rel="noopener noreferrer">
+      View File
+    </a>
+  </div>
+)}
+
 
         </div>
-
       </div>
 
       <div>
