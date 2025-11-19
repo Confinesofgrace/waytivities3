@@ -13,6 +13,8 @@ import { AuthProvider } from './Components/AuthContext';
 import Cart from './Pages/Cart/Cart';
 
 import { CartProvider } from "./Components/CartContext";
+import TestPayment from './Pages/TestPayment/TestPayment';
+import DownloadPage from './Pages/Download Page/DownloadPage';
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/cart" element={<Cart/>} />
+                <Route path="/testpayment" element={<TestPayment/>} />
+                <Route path="/testpayment" element={<DownloadPage/>} />
               </Routes>
             </main>
           </BrowserRouter>
