@@ -1,8 +1,13 @@
 import './OrderSummary.css';
+import { useNavigate } from "react-router-dom";
+
 import { useCart } from "./CartContext";
+import { useEffect } from "react";
 
 function OrderSummary() {
-  const { cart } = useCart();
+  const navigate = useNavigate();
+
+  const { cart, setSubtotal } = useCart();
 
   // Only include items that have at least one selected format
   const selectedItems = cart.filter(
@@ -22,6 +27,9 @@ function OrderSummary() {
     return acc + totalPrice;
   }, 0);
 
+  useEffect(() => {setSubtotal(subtotal);}, [subtotal]);
+
+  /*
   // Temporary handler for download
   const handleDownload = () => {
     if (selectedItems.length === 0) {
@@ -52,6 +60,7 @@ function OrderSummary() {
 
     alert("✅ Download started for your selected books!");
   };
+  */
 
   
   return (
@@ -100,7 +109,8 @@ function OrderSummary() {
         <div id="checkout">
           <button
             disabled={selectedItems.length === 0}
-            onClick={handleDownload}
+            onClick={() => navigate("/testpayment")}
+
             className={selectedItems.length === 0 ? "disabled" : ""}
           >
             Proceed to Checkout

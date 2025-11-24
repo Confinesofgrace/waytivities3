@@ -4,8 +4,8 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
 
-  // 🛒 Add item to cart
   const addToCart = (book) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === book.id);
@@ -15,25 +15,21 @@ export function CartProvider({ children }) {
         );
       }
 
-      // Default: only PDF selected, paperback not selected yet
       return [
         ...prev,
         {
           ...book,
           qty: 1,
-          format: { pdf: true, paperback: false }, // ✅ default PDF only
+          format: { pdf: true, paperback: false },
         },
       ];
     });
   };
 
-
-  // ❌ Remove item from cart
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // 🔢 Update quantity
   const updateQty = (id, qty) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -42,16 +38,12 @@ export function CartProvider({ children }) {
     );
   };
 
-  // 🧩 Update format selection (PDF / Paperback / Both)
   const updateFormat = (id, formatType, checked) => {
     setCart((prev) =>
       prev.map((item) => {
         if (item.id !== id) return item;
 
-        // Update the specific format (pdf/paperback)
         const newFormats = { ...item.format, [formatType]: checked };
-
-        // If only PDF is selected → qty = 1 (since no multiple copies of a digital file)
         const newQty =
           newFormats.pdf && !newFormats.paperback ? 1 : item.qty;
 
@@ -60,10 +52,17 @@ export function CartProvider({ children }) {
     );
   };
 
-
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQty, updateFormat }}
+      value={{
+        cart,
+        subtotal,
+        setSubtotal,
+        addToCart,
+        removeFromCart,
+        updateQty,
+        updateFormat,
+      }}
     >
       {children}
     </CartContext.Provider>

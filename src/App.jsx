@@ -36,7 +36,7 @@ function App() {
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/cart" element={<Cart/>} />
                 <Route path="/testpayment" element={<TestPayment/>} />
-                <Route path="/testpayment" element={<DownloadPage/>} />
+                <Route path="/downloadpage" element={<DownloadPage/>} />
               </Routes>
             </main>
           </BrowserRouter>
