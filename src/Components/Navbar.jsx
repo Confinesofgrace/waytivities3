@@ -105,12 +105,16 @@ function Navbar() {
                         */
                     }
 
-                    <div id="navs">
-                        <NavLink to='/adminpage' activeclassname="active" onClick={closeMenu}>
-                        Admin
-                        <hr id='tab-hr'/>
-                        </NavLink>
-                    </div>
+                    {   /*
+                        <div id="navs">
+                            <NavLink to='/adminpage' activeclassname="active" onClick={closeMenu}>
+                            Admin
+                            <hr id='tab-hr'/>
+                            </NavLink>
+                        </div>
+                        */
+                    }
+
                     <div id="navs">
                         <NavLink to='/cart' activeclassname="active" onClick={closeMenu}>
                         <span style={{display:'flex', alignItems:'center'}}>
