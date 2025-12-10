@@ -12,27 +12,42 @@ function Footer () {
             <div id='footer-line'>
 
                 <div id='footer-header' >
-                    <h4>
-                        Waytivities
-                    </h4>
+                    <Link to='/'>
+                        <h4 id='footer-logo'>
+                            Waytivities
+                        </h4>
+                    </Link>
 
-                    <p>
-                        His Footprints are Clearly Seen
-                    </p>
+                    <Link to='/'>
+                        <p id='footer-tagline'>
+                            His Footprints are Clearly Seen
+                        </p>
+                    </Link> 
+                    
                       
                 </div>
 
                 <div  id='footer-nav'>
+
+                    <Link to='/books'>
+                        <p id='footer-nav-books'>
+                            Books
+                        </p>
+                    </Link> 
+                    <Link to='/about'>
+                        <p id='footer-nav-about'>
+                            About Us
+                        </p>
+                    </Link> 
+                    <Link to='/terms'>
+                        <p id='footer-nav-terms'>
+                            Terms of Use
+                        </p>
+                    </Link> 
                     
-                    <p>
-                        Books
-                    </p>
-                    <p>
-                        About Us
-                    </p>
-                    <p>
-                        Terms of Use
-                    </p>
+                    
+                    
+                    
                 </div>
 
             </div>

@@ -16,6 +16,7 @@ import Cart from './Pages/Cart/Cart';
 import { CartProvider } from "./Components/CartContext";
 import TestPayment from './Pages/TestPayment/TestPayment';
 import DownloadPage from './Pages/Download Page/DownloadPage';
+import Terms from './Pages/Terms/Terms';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/terms" element={<Terms/>} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/books/:bookId" element={<Books />} />
                 {/* 

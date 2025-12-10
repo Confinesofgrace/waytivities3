@@ -4,9 +4,10 @@
     padding: 40px;
 }
 
-#footer-header h4
+#footer-logo, #footer-tagline, #footer-nav-books, #footer-nav-about, #footer-nav-terms
 {
     cursor: pointer;
+    color: white;
 }
 
 #footer-line
@@ -65,6 +66,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    cursor: pointer;
 }
 
 @media screen and (max-width: 900px) 
