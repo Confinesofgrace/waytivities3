@@ -6,9 +6,10 @@ import Books from './Pages/Books/Books';
 import SignUp from './Pages/SignUp/SignUp';
 import LogIn from './Pages/LogIn/LogIn';
 import Navbar from './Components/Navbar';
-import Admin from './Pages/Admin/Admin';
+//import Admin from './Pages/Admin/Admin';
+//import AdminPage from './Pages/Admin/AdminPage';
 import { BookProvider } from './Pages/BookContext/BookContext'; // Import BookProvider
-import AdminPage from './Pages/Admin/AdminPage';
+
 import { AuthProvider } from './Components/AuthContext';
 import Cart from './Pages/Cart/Cart';
 
@@ -30,8 +31,10 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/books/:bookId" element={<Books />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/adminpage" element={<AdminPage />} />
+                {/* 
+                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/adminpage" element={<AdminPage />} />
+                */}
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/cart" element={<Cart/>} />
