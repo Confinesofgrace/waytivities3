@@ -100,6 +100,30 @@ a
   margin-top: 16px;
 }
 
+/*
+.landing-wrapper 
+{
+    background-color: rgba(241, 241, 113, 0.342);
+}
+*/
+
+
+
+
+.landing-wrapper {
+    background: 
+        linear-gradient(to bottom, 
+        rgba(255,255,255,0.95), 
+        rgb(252, 255, 244) ,
+        rgb(232, 252, 179)),
+        url(../assets/footprint-no-bg2.png);
+    background-repeat: repeat;
+    background-size: 600px;
+    background-position: top center;
+
+    min-height: 100vh;
+}
+
 
 
 

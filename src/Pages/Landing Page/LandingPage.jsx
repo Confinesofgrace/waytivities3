@@ -5,7 +5,7 @@ import Hero from "../../Components/Hero";
 
 function LandingPage () {
     return (
-        <div>
+        <div className="landing-wrapper">
             
             <Hero/>
             <div id="section-B">
