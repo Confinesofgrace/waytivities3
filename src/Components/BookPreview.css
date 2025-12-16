@@ -1,12 +1,29 @@
-#body-bookPreview 
-{
-    background-image: url(../assets/footprint-no-bg2.png);
-    background-repeat: no-repeat;
-    /*background-position: center;
-    background-size: cover;*/
+
+
+#body-bookPreview {
+    position: relative;
     padding: 40px;
-    
 }
+
+#body-bookPreview::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url(../assets/footprints-walk-background.png);
+    background-repeat: repeat;
+    background-position:center;
+    background-size: 40%;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#body-bookPreview > * {
+    position: relative;
+    z-index: 1;
+}
+
+
 
 .category-section 
 {
@@ -216,3 +233,16 @@
         height: 250px;
     }
 }
+
+@media screen and (max-width: 768px) {
+    #body-bookPreview::before {
+        background-position: top center;
+        background-size: 80%;
+        opacity: 0.08;
+    }
+
+    #body-bookPreview {
+        padding: 20px;
+    }
+}
+

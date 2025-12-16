@@ -118,7 +118,7 @@ function Navbar() {
                     <div id="navs">
                         <NavLink to='/cart' activeclassname="active" onClick={closeMenu}>
                         <span style={{display:'flex', alignItems:'center'}}>
-                            <p>Cart</p> <FaCartShopping/>
+                            <p>Cart</p> {/* <FaCartShopping style={{marginLeft:'5px'}} /> */}
                         </span>
                         
 
