@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../Components/CartContext";
 
 function DownloadPage() {
   const navigate = useNavigate();
-  const { cart } = useCart();
+  const [showThankYou, setShowThankYou] = useState(false);
 
-  // Books that have PDF format
-  const downloadableItems = cart.filter(
+  const purchasedItems =
+    JSON.parse(localStorage.getItem("purchasedItems")) || [];
+
+  const downloadableItems = purchasedItems.filter(
     (item) => item.format?.pdf && item.bookFileUrl
   );
 
@@ -15,10 +16,21 @@ function DownloadPage() {
     const paid = localStorage.getItem("paid");
 
     if (paid !== "true") {
-      alert("You cannot access downloads without payment.");
-      navigate("/cart");
+      navigate("/checkout", { replace: true });
+      return;
     }
-  }, []);
+
+    if (sessionStorage.getItem("showThankYou")) {
+      setShowThankYou(true);
+
+      setTimeout(() => {
+        setShowThankYou(false);
+        sessionStorage.removeItem("showThankYou");
+      }, 4000);
+    }
+  }, [navigate]);
+
+
 
   const handleDownload = (url, title) => {
     const link = document.createElement("a");
@@ -40,7 +52,23 @@ function DownloadPage() {
     <div id="page-layout">
       <div style={{ padding: "2rem" }}>
         <h1>Your Downloads</h1>
-        <p>Thank you for your purchase! Click below to download your books.</p>
+        {showThankYou && (
+  <div
+    style={{
+      background: "#f4f0fa",
+      border: "1px solid #d6c8f0",
+      padding: "1.5rem",
+      borderRadius: "10px",
+      marginBottom: "2rem",
+      textAlign: "center",
+      animation: "fadeIn 0.5s ease",
+    }}
+  >
+    <h2>🎉 Thank you for your purchase!</h2>
+    <p>Your books are ready for download.</p>
+  </div>
+)}
+
 
         {/* Download All Button */}
         {downloadableItems.length > 1 && (

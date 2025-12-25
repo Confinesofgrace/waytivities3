@@ -3,10 +3,8 @@ import { useCart } from "./Components/CartContext";
 import { useNavigate } from "react-router-dom";
 
 function FlutterwaveComponent() {
-  const { subtotal, clearCart } = useCart();
+  const { cart, subtotal, clearCart } = useCart();
   const navigate = useNavigate();
-
-  if (subtotal <= 0) return null;
 
   const fwConfig = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY,
@@ -15,7 +13,7 @@ function FlutterwaveComponent() {
     currency: "NGN",
     payment_options: "card,banktransfer,ussd",
     customer: {
-      email: "user@gmail.com", // later pull from auth
+      email: "user@gmail.com",
       name: "John Doe",
     },
     customizations: {
@@ -24,19 +22,28 @@ function FlutterwaveComponent() {
       logo: "/logo.png",
     },
     text: `Pay ₦${subtotal.toLocaleString()}`,
+
     callback: (response) => {
       console.log("Flutterwave response:", response);
 
       if (response.status === "successful") {
-        // TEMP (for now)
         localStorage.setItem("paid", "true");
 
-        clearCart();
-        navigate("/downloadpage");
-      }
+        localStorage.setItem(
+          "purchasedItems",
+          JSON.stringify(cart)
+        );
 
-      closePaymentModal();
+        sessionStorage.setItem("showThankYou", "true");
+
+        closePaymentModal();
+
+        clearCart();
+
+        navigate("/downloadpage", { replace: true });
+      }
     },
+
     onClose: () => {},
   };
 
