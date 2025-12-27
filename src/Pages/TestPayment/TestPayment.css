@@ -1,0 +1,92 @@
+#checkout-container 
+{
+  width: 100%;
+  margin: 30px auto;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+#checkout-container h2 
+{
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.checkout-thumbnails 
+{
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.checkout-thumbnails img 
+{
+  width: 52px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+
+
+/* Flutterwave button override */
+.checkout-btn 
+{
+  width: auto;
+  min-width: 180px;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(61, 61, 170);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.checkout-btn:hover 
+{
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.checkout-btn:disabled 
+{
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+@media (max-width: 600px) {
+  #checkout-container {
+    margin: 16px;
+    padding: 1.5rem 1.25rem;
+  }
+
+  #checkout-container h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .checkout-thumbnails {
+    justify-content: flex-start;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    min-width: unset;
+    padding: 1rem;
+    font-size: 1.05rem;
+  }
+}
+

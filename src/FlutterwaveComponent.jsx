@@ -21,32 +21,32 @@ function FlutterwaveComponent() {
       description: "Payment for books",
       logo: "/logo.png",
     },
-    text: `Pay ₦${subtotal.toLocaleString()}`,
 
     callback: (response) => {
-      console.log("Flutterwave response:", response);
-
       if (response.status === "successful") {
-        // ✅ STORE PAYMENT STATE
         localStorage.setItem("paid", "true");
         localStorage.setItem("purchasedItems", JSON.stringify(cart));
         sessionStorage.setItem("showThankYou", "true");
-
         clearCart();
       }
     },
 
     onClose: () => {
-      // ✅ ONLY redirect AFTER modal is closed
-      const paid = localStorage.getItem("paid");
-
-      if (paid === "true") {
+      if (localStorage.getItem("paid") === "true") {
         navigate("/downloadpage", { replace: true });
       }
     },
   };
 
-  return <FlutterWaveButton {...fwConfig} />;
+  return (
+    
+    <FlutterWaveButton
+      {...fwConfig}
+      className="checkout-btn"
+      disabled={subtotal === 0}
+      text={`Pay ₦${subtotal.toLocaleString()}`}
+    />
+  );
 }
 
 export default FlutterwaveComponent;
