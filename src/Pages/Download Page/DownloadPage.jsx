@@ -9,8 +9,9 @@ function DownloadPage() {
     JSON.parse(localStorage.getItem("purchasedItems")) || [];
 
   const downloadableItems = purchasedItems.filter(
-    (item) => item.format?.pdf && item.bookFileUrl
+    (item) => item.availableFormats?.pdf && item.bookFileUrl
   );
+
 
   useEffect(() => {
     const paid = localStorage.getItem("paid");

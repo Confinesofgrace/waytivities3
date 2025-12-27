@@ -27,24 +27,23 @@ function FlutterwaveComponent() {
       console.log("Flutterwave response:", response);
 
       if (response.status === "successful") {
+        // ✅ STORE PAYMENT STATE
         localStorage.setItem("paid", "true");
-
-        localStorage.setItem(
-          "purchasedItems",
-          JSON.stringify(cart)
-        );
-
+        localStorage.setItem("purchasedItems", JSON.stringify(cart));
         sessionStorage.setItem("showThankYou", "true");
 
-        closePaymentModal();
-
         clearCart();
-
-        navigate("/downloadpage", { replace: true });
       }
     },
 
-    onClose: () => {},
+    onClose: () => {
+      // ✅ ONLY redirect AFTER modal is closed
+      const paid = localStorage.getItem("paid");
+
+      if (paid === "true") {
+        navigate("/downloadpage", { replace: true });
+      }
+    },
   };
 
   return <FlutterWaveButton {...fwConfig} />;
