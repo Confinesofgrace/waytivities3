@@ -42,12 +42,12 @@
 {
   width: auto;
   min-width: 180px;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
+  padding: 10px 10px;
+  border-radius: 10px;
   border: none;
   background-color: rgb(61, 61, 170);
   color: #fff;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
