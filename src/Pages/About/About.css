@@ -1,0 +1,61 @@
+#aboutus-layout
+{
+    height:100vh;
+    padding: 120px 100px 100px 100px ;
+    /*background-color: #f9f6f2; */
+    background-color: rgba(235, 248, 178, 0.233);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+#aboutus-left, #aboutus-right
+
+{
+   
+    height: 100%;
+}
+
+#aboutus-left
+{
+    width: 40%;
+    
+    /*background-color: blue; */
+    background-image: url(/src/assets/Teamwork2.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    
+}
+
+#aboutus-right
+{
+     width: 60%;
+    /*background-color: rgba(235, 248, 178, 0.233);*/  
+    
+}
+
+#aboutus-title
+{
+    font-size: 120px;
+    font-weight: 600;
+    position: absolute;
+    z-index: 3;
+    top: 80px;
+
+    right: 200px;
+
+    letter-spacing: 14px;
+}
+
+#aboutus
+{
+    font-size: 14px;
+    text-align: left;
+    padding: 160px 100px 0 100px;
+
+}
