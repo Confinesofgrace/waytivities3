@@ -18,7 +18,6 @@
 }
 
 #aboutus-left, #aboutus-right
-
 {
    
     height: 100%;
@@ -27,8 +26,8 @@
 #aboutus-left
 {
     width: 40%;
+    border-top-right-radius: 80px;
     
-    /*background-color: blue; */
     background-image: url(/src/assets/Teamwork2.jpg);
     background-position: center;
     background-size: cover;
@@ -56,7 +55,7 @@
 
 #aboutus-title
 {
-    font-size: 120px;
+    font-size: clamp(48px, 8vw, 120px);
     font-weight: 600;
     position: absolute;
     z-index: 3;
@@ -70,15 +69,62 @@
 #aboutus
 {
     font-size: 14px;
+    line-height: 1.7;
     text-align: left;
-    padding: 160px 0px 0 100px;
+    padding: 10px 0px 0 100px;
 
 }
 
 #aboutus-visualInterest
 {
     width: 10%;
-    height: 10px;
+    height: 4px;
 
     background-color: black;
+}
+
+/* =======================
+   RESPONSIVE (TABLET & MOBILE)
+======================= */
+@media screen and (max-width: 900px) 
+{
+
+    #aboutus-layout {
+        flex-direction: column;
+        height: 100%;
+        padding: 80px 24px 40px;
+    }
+
+    #aboutus-left,
+    #aboutus-right {
+        width: 100%;
+        height: auto;
+    }
+
+    #aboutus-left {
+        min-height: 280px;
+    }
+
+    #aboutus-right {
+        align-items: flex-end;
+        padding: 0;
+        gap: 24px;
+    }
+
+    #aboutus-title {
+        position: static;
+        text-align: center;
+        margin-bottom: 24px;
+        letter-spacing: 6px;
+    }
+
+    #aboutus {
+        font-size: 14px;
+        max-width: 100%;
+        padding: 0;
+    }
+
+    #aboutus-visualInterest {
+        width: 40px;
+    }
 }
