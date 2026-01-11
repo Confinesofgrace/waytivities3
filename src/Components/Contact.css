@@ -1,0 +1,51 @@
+
+
+
+
+#socials-contact
+{
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+
+    padding: 8px 8px 0px 0px;
+
+    background-color: rgba(235, 248, 178, 0.233);
+}
+
+
+#social-media-contact
+{
+    color: rgb(0, 0, 0);
+
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid;
+    border-color: rgb(0, 0, 0);
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+@media screen and (max-width: 900px) 
+{
+  
+
+  #socials-contact
+  {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  #social-media-contact 
+  {
+    width: 36px;
+    height: 36px;
+  }
+
+}

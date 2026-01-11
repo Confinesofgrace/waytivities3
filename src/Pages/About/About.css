@@ -1,9 +1,14 @@
+#aboutus-page
+{
+    background-color: rgba(235, 248, 178, 0.233);
+}
+
 #aboutus-layout
 {
     height:100vh;
     padding: 120px 100px 100px 100px ;
     /*background-color: #f9f6f2; */
-    background-color: rgba(235, 248, 178, 0.233);
+    
 
     display: flex;
     align-items: center;
@@ -29,6 +34,10 @@
     background-size: cover;
     background-repeat: no-repeat;
 
+    display: flex;
+    align-items: end;
+    justify-content: end;
+
     
 }
 
@@ -36,7 +45,13 @@
 {
      width: 60%;
     /*background-color: rgba(235, 248, 178, 0.233);*/  
-    
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: end;
+    gap: 40px;
+
+    padding: 0px 100px 12px 0px;
 }
 
 #aboutus-title
@@ -47,7 +62,7 @@
     z-index: 3;
     top: 80px;
 
-    right: 200px;
+    right: 180px;
 
     letter-spacing: 14px;
 }
@@ -56,6 +71,14 @@
 {
     font-size: 14px;
     text-align: left;
-    padding: 160px 100px 0 100px;
+    padding: 160px 0px 0 100px;
 
+}
+
+#aboutus-visualInterest
+{
+    width: 10%;
+    height: 10px;
+
+    background-color: black;
 }
