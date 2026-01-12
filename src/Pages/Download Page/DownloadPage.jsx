@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+import { useCart } from "../../Components/CartContext";
+
 
 function DownloadPage() {
   const navigate = useNavigate();
@@ -16,13 +18,37 @@ function DownloadPage() {
 
 
   const handleDownload = (url, title) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${title}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${title}.pdf`;
+
+  // 👇 THIS is the key line
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+
+
+  
+
+useEffect(() => {
+  const stored = sessionStorage.getItem("cartSnapshot");
+  if (!stored) return;
+
+  const parsed = JSON.parse(stored);
+
+  const downloadable = parsed.filter(
+    (item) => item.format?.pdf && item.bookFileUrl
+  );
+
+  setBooks(downloadable);
+}, []);
+
+
 
   return (
     <div id="page-layout">
@@ -41,7 +67,7 @@ function DownloadPage() {
             }}
           >
             <h2>🎉 Thank you for your purchase!</h2>
-            <p>Your books are downloading automatically.</p>
+            <p>Download your PDF and have a good read.</p>
           </div>
         )}
 

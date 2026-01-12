@@ -1,12 +1,16 @@
+import { useEffect } from "react";
 import { FlutterWaveButton } from "flutterwave-react-v3";
 import { useCart } from "./Components/CartContext";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
 
 function FlutterwaveComponent() {
-  const { subtotal } = useCart();
+  const { subtotal, clearCart, cart } = useCart();
   const navigate = useNavigate();
-  const paymentSuccessful = useRef(false);
+
+  // Save cart snapshot before payment
+  useEffect(() => {
+    sessionStorage.setItem("cartSnapshot", JSON.stringify(cart));
+  }, [cart]);
 
   const fwConfig = {
     public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY,
@@ -26,14 +30,26 @@ function FlutterwaveComponent() {
       logo: "/logo.png",
     },
 
-    callback: (response) => {
-      if (response.status === "successful") {
-        paymentSuccessful.current = true;
-      }
+    onClose: () => {
+      console.log("Payment modal closed");
     },
 
-    onClose: () => {
-      if (paymentSuccessful.current) {
+    callback: (response) => {
+      console.log("FLUTTERWAVE RESPONSE:", response);
+
+      if (
+        response.status === "successful" ||
+        response.status === "completed" ||
+        response.status === "success"
+      ) {
+        sessionStorage.setItem(
+          "purchasedBooks",
+          JSON.stringify(
+            JSON.parse(sessionStorage.getItem("cartSnapshot") || "[]")
+          )
+        );
+
+        clearCart();
         navigate("/downloadpage", { replace: true });
       }
     },

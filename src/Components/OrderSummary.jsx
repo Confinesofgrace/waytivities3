@@ -1,73 +1,21 @@
-import './OrderSummary.css';
+import "./OrderSummary.css";
 import { useNavigate } from "react-router-dom";
-
 import { useCart } from "./CartContext";
-import { useEffect } from "react";
 
 function OrderSummary() {
   const navigate = useNavigate();
+  const { cart, subtotal } = useCart();
 
-  const { cart, setSubtotal } = useCart();
-
-  // Only include items that have at least one selected format
+  // Only items with selected formats
   const selectedItems = cart.filter(
     (item) => item.format?.pdf || item.format?.paperback
   );
 
-  // Calculate subtotal using correct price structure
-  const subtotal = selectedItems.reduce((acc, item) => {
-    let totalPrice = 0;
-
-    // If user selected PDF, add the single copy price
-    if (item.format?.pdf) totalPrice += item.price;
-
-    // If user selected Paperback, add price × quantity
-    if (item.format?.paperback) totalPrice += item.price * item.qty;
-
-    return acc + totalPrice;
-  }, 0);
-
-  useEffect(() => {setSubtotal(subtotal);}, [subtotal]);
-
-  /*
-  // Temporary handler for download
-  const handleDownload = () => {
-    if (selectedItems.length === 0) {
-      alert("Your cart is empty or no format selected!");
-      return;
-    }
-
-    // Filter for items with PDF format + valid book file
-    const downloadableBooks = selectedItems.filter(
-      (item) => item.format?.pdf && item.bookFileUrl
-    );
-
-    if (downloadableBooks.length === 0) {
-      alert("No downloadable PDF found for your selected items.");
-      return;
-    }
-
-    // Trigger download for each PDF item
-    downloadableBooks.forEach((item) => {
-      const link = document.createElement("a");
-      link.href = item.bookFileUrl;
-      link.download = `${item.title}.pdf`;
-      link.target = "_blank";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    alert("✅ Download started for your selected books!");
-  };
-  */
-
-  
   return (
     <div id="order-summary">
       <p className="order-summary-title">Order Summary</p>
 
-      {/* Scrollable item list */}
+      {/* Items */}
       <div className="order-items">
         {selectedItems.length === 0 ? (
           <p className="empty-cart">No selected items yet</p>
@@ -92,7 +40,7 @@ function OrderSummary() {
         )}
       </div>
 
-      {/* Footer with subtotal and checkout */}
+      {/* Footer */}
       <div className="summary-footer">
         <div className="summary-section">
           <div className="summary-row">
@@ -108,19 +56,16 @@ function OrderSummary() {
 
         <div id="checkout">
           <button
-            disabled={selectedItems.length === 0}
+            disabled={selectedItems.length === 0 || subtotal === 0}
             onClick={() => navigate("/testpayment")}
-
-            className={selectedItems.length === 0 ? "disabled" : ""}
+            className={
+              selectedItems.length === 0 || subtotal === 0 ? "disabled" : ""
+            }
           >
             Proceed to Checkout
           </button>
         </div>
       </div>
-
-      {console.log("CART ITEMS:", cart)}
-{console.log("SELECTED ITEMS:", selectedItems)}
-
     </div>
   );
 }
