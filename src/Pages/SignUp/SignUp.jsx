@@ -7,6 +7,9 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider
 } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+
 
 import './SignUp.css';
 
@@ -21,7 +24,7 @@ function SignUp() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -29,36 +32,77 @@ function SignUp() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert('Account created!');
-      navigate('/login'); // Redirect to login or another page
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+
+      // 🔐 Save user profile to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        provider: "email",
+        createdAt: serverTimestamp(),
+      });
+
+      navigate("/"); // or /library later
     } catch (err) {
       setError(err.message);
     }
   };
+
 
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
 
   const handleGoogleSignup = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      alert('Signed up with Google!');
-      navigate('/'); // or wherever you want to go after signup
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          uid: user.uid,
+          email: user.email,
+          provider: "google",
+          createdAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
 
+
   const handleFacebookSignup = async () => {
     try {
-      await signInWithPopup(auth, facebookProvider);
-      alert('Signed up with Facebook!');
-      navigate('/'); // or wherever you want to go after signup
+      const result = await signInWithPopup(auth, facebookProvider);
+      const user = result.user;
+
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          uid: user.uid,
+          email: user.email,
+          provider: "facebook",
+          createdAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
+
 
 
 

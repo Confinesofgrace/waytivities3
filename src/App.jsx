@@ -17,6 +17,7 @@ import { CartProvider } from "./Components/CartContext";
 import TestPayment from './Pages/TestPayment/TestPayment';
 import DownloadPage from './Pages/Download Page/DownloadPage';
 import Terms from './Pages/Terms/Terms';
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 
 function App() {
@@ -41,7 +42,13 @@ function App() {
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/cart" element={<Cart/>} />
                 <Route path="/testpayment" element={<TestPayment/>} />
-                <Route path="/downloadpage" element={<DownloadPage/>} />
+                <Route path="/downloadpage" element={
+                    <ProtectedRoute>
+                      <DownloadPage />
+                    </ProtectedRoute>
+                  }
+                />
+
               </Routes>
             </main>
           </BrowserRouter>
