@@ -40,6 +40,7 @@ function Navbar() {
                 <button id="signup-btn">Sign Up</button>
             </NavLink>
             </>
+            
         );
     };
 
@@ -125,6 +126,16 @@ function Navbar() {
                         <hr id='tab-hr'/>
                         </NavLink>
                     </div>
+
+                    {user && (
+                        <div id="navs">
+                            <NavLink to="/library" onClick={closeMenu}>
+                            Library
+                            <hr id="tab-hr" />
+                            </NavLink>
+                        </div>
+                    )}
+
 
 
                     {/* Show login/signup buttons only when mobile menu is open */}

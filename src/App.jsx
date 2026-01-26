@@ -18,6 +18,7 @@ import TestPayment from './Pages/TestPayment/TestPayment';
 import DownloadPage from './Pages/Download Page/DownloadPage';
 import Terms from './Pages/Terms/Terms';
 import ProtectedRoute from "./Components/ProtectedRoute";
+import UserLibrary from './Pages/UserLibrary/UserLibrary';
 
 
 function App() {
@@ -48,6 +49,14 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+
+                <Route path="/library" element={
+                    <ProtectedRoute>
+                      <UserLibrary/>
+                    </ProtectedRoute>
+                  }
+                />
+
 
               </Routes>
             </main>
