@@ -94,7 +94,7 @@ function UserLibrary() {
                   Download
                 </a>
 
-                {/* Read in App */}
+                {/* Read in App
                 <button
                   onClick={() =>
                     navigate("/reader", {
@@ -116,6 +116,7 @@ function UserLibrary() {
                 >
                   Read Now
                 </button>
+                 */}
 
               </div>
             </div>

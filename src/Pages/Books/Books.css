@@ -149,6 +149,32 @@
 }
 
 
+.add-to-cart-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  background: black;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.add-to-cart-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
 
 
 

@@ -2,14 +2,16 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
-import DOMPurify from 'dompurify'; // ✅ Added for safe HTML rendering
+import DOMPurify from 'dompurify';
 import './Books.css';
-import BookListsPreview from "../../Components/BookListsPreview";
 import BookPreview from '../../Components/BookPreview';
 import Footer from '../../Components/Footer';
+import { useCart } from "../../Components/CartContext";
 
 function Books() {
   const { bookId } = useParams();
+  const { addToCart, cart } = useCart();
+
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -25,12 +27,10 @@ function Books() {
       }));
       setBooks(booksArray);
 
-      // If a bookId is provided, find it in the fetched array
       if (bookId) {
         const foundBook = booksArray.find(b => b.id === bookId);
         setSelectedBook(foundBook || booksArray[0]);
       } else {
-        // Default: first book
         setSelectedBook(booksArray[0]);
       }
 
@@ -40,16 +40,27 @@ function Books() {
     loadBooks();
   }, [bookId]);
 
-  const handleBookClick = (book) => {
-    setSelectedBook(book);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  };
-
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  // ✅ Check if already in cart
+  const isInCart = selectedBook
+    ? cart.some(item => item.id === selectedBook.id)
+    : false;
+
+  // ✅ Add to cart handler
+  const handleAddToCart = () => {
+    if (!selectedBook || isInCart) return;
+
+    addToCart({
+      id: selectedBook.id,
+      title: selectedBook.title,
+      frontCover: selectedBook.frontCover,
+      price: selectedBook.price || 0,
+      bookFileUrl: selectedBook.bookFileUrl,
+      format: selectedBook.format,
+    });
   };
 
   return (
@@ -61,6 +72,8 @@ function Books() {
               <p className="loading-message">Loading books...</p>
             ) : selectedBook ? (
               <div id='preview-box' className="preview-flex" key={selectedBook.id}>
+                
+                {/* LEFT SIDE */}
                 <div id='book-preview'>
                   <div
                     id='book-cover'
@@ -74,6 +87,15 @@ function Books() {
                     {!selectedBook.frontCover && <p>{selectedBook.title}</p>}
                   </div>
 
+                  {/* ✅ ADD TO CART BUTTON */}
+                  <button
+                    onClick={handleAddToCart}
+                    disabled={isInCart}
+                    className="add-to-cart-btn"
+                  >
+                    {isInCart ? "Added ✓" : "Add to Cart"}
+                  </button>
+
                   <div
                     id='description-overlay'
                     className={isExpanded ? 'expanded' : ''}
@@ -82,7 +104,6 @@ function Books() {
                     <div>
                       <span className="book-title">{selectedBook.title}</span>
 
-                      {/* ✅ Safe HTML rendering for formatted text */}
                       <div
                         dangerouslySetInnerHTML={{
                           __html: DOMPurify.sanitize(selectedBook.aboutBook || ""),
@@ -94,6 +115,7 @@ function Books() {
                   </div>
                 </div>
 
+                {/* RIGHT SIDE */}
                 <div id='book-trailer-container'>
                   <div id='book-trailer'>
                     {selectedBook.trailer ? (
@@ -113,7 +135,6 @@ function Books() {
                           style={{ borderRadius: '8px' }}
                         />
                       ) : (
-                        // ✅ Safely render rich text trailer
                         <div
                           dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(selectedBook.trailer || ""),
