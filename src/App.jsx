@@ -19,6 +19,7 @@ import DownloadPage from './Pages/Download Page/DownloadPage';
 import Terms from './Pages/Terms/Terms';
 import ProtectedRoute from "./Components/ProtectedRoute";
 import UserLibrary from './Pages/UserLibrary/UserLibrary';
+import ReaderPage from './Pages/ReaderPage/ReaderPage';
 
 
 function App() {
@@ -56,6 +57,9 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+
+                <Route path="/reader" element={<ReaderPage />} />
+
 
 
               </Routes>

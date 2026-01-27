@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useAuth } from "../../Components/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function UserLibrary() {
   const { user } = useAuth();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
@@ -58,6 +60,7 @@ function UserLibrary() {
                 borderRadius: "10px",
               }}
             >
+              {/* Book Info */}
               <div style={{ display: "flex", gap: "1rem" }}>
                 <img
                   src={book.frontCover}
@@ -72,20 +75,49 @@ function UserLibrary() {
                 <h3>{book.title}</h3>
               </div>
 
-              <a
-                href={book.bookFileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  padding: "0.6rem 1.2rem",
-                  borderRadius: "6px",
-                  background: "#000",
-                  color: "#fff",
-                  textDecoration: "none",
-                }}
-              >
-                Download
-              </a>
+              {/* Actions */}
+              <div style={{ display: "flex", gap: "16px" }}>
+                
+                {/* Download */}
+                <a
+                  href={book.bookFileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    padding: "0.6rem 1.2rem",
+                    borderRadius: "6px",
+                    background: "#000",
+                    color: "#fff",
+                    textDecoration: "none",
+                  }}
+                >
+                  Download
+                </a>
+
+                {/* Read in App */}
+                <button
+                  onClick={() =>
+                    navigate("/reader", {
+                      state: {
+                        title: book.title,
+                        url: book.bookFileUrl,
+                      },
+                    })
+                  }
+                  style={{
+                    padding: "0.6rem 1.2rem",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: "#000",
+                    fontSize: "14px",
+                    color: "#fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  Read Now
+                </button>
+
+              </div>
             </div>
           ))
         )}
