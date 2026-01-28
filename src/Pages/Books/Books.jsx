@@ -18,6 +18,12 @@ function Books() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [coverLoaded, setCoverLoaded] = useState(false);
+
+  useEffect(() => {
+    setCoverLoaded(false);
+  }, [selectedBook]);
+
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -93,17 +99,24 @@ useEffect(() => {
                 
                 {/* LEFT SIDE */}
                 <div id='book-preview'>
-                  <div
-                    id='book-cover'
-                    className={selectedBook.frontCover ? "with-cover" : "no-cover"}
-                    style={{
-                      backgroundImage: selectedBook.frontCover
-                        ? `url(${selectedBook.frontCover})`
-                        : "none",
-                    }}
-                  >
-                    {!selectedBook.frontCover && <p>{selectedBook.title}</p>}
+                  <div id="book-cover" className={!selectedBook.frontCover ? "no-cover" : ""}>
+                    {selectedBook.frontCover ? (
+                      <img
+                        src={selectedBook.frontCover}
+                        alt={selectedBook.title}
+                        className={`cover-image ${coverLoaded ? "show" : ""}`}
+                        onLoad={() => {
+                          requestAnimationFrame(() => {
+                            setCoverLoaded(true);
+                          });
+                        }}
+
+                      />
+                    ) : (
+                      <p>{selectedBook.title}</p>
+                    )}
                   </div>
+
 
                   
 
