@@ -55,6 +55,12 @@
   transform: scale(1);
 }
 
+.cover-image 
+{
+  will-change: opacity, transform;
+}
+
+
 /*
 #book-cover.with-cover 
 {

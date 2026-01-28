@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "./AuthContext"; // adjust path if needed
+
 
 function Hero () {
+
+  const { user } = useAuth();
+
 
     return(
         <section id="hero">
@@ -17,10 +22,16 @@ function Hero () {
                     But it is a journey- a Journey of Faith... Are you ready?</p>
                     
 
-                    <Link to= 'signup'>
-                    
-                        <button id="signUp">Get Started</button>
-                    </Link>
+                    {!user ? (
+                        <Link to="signup">
+                            <button id="signUp">Get Started</button>
+                        </Link>
+                        ) : (
+                        <Link to="books">
+                            <button id="signUp">Get Resources</button>
+                        </Link>
+                    )}
+
 
                 </div>
             </div>
