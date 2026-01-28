@@ -58,6 +58,7 @@ function UserLibrary() {
                 marginBottom: "1rem",
                 border: "1px solid #ddd",
                 borderRadius: "10px",
+                backgroundColor: 'rgba(235, 248, 178, 0.04)'
               }}
             >
               {/* Book Info */}
