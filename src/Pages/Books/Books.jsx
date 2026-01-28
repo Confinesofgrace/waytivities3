@@ -42,6 +42,17 @@ function Books() {
     loadBooks();
   }, [bookId]);
 
+  // 🔥 Scroll to top whenever a new book is selected
+useEffect(() => {
+  if (selectedBook) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+}, [selectedBook]);
+
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
