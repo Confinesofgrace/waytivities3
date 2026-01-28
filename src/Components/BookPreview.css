@@ -1,11 +1,13 @@
 
 
-#body-bookPreview {
+#body-bookPreview 
+{
     position: relative;
     padding: 40px;
 }
 
-#body-bookPreview::before {
+#body-bookPreview::before 
+{
     content: "";
     position: absolute;
     inset: 0;
@@ -18,7 +20,8 @@
     z-index: 0;
 }
 
-#body-bookPreview > * {
+#body-bookPreview > * 
+{
     position: relative;
     z-index: 1;
 }

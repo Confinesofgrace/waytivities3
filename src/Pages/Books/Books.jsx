@@ -7,10 +7,12 @@ import './Books.css';
 import BookPreview from '../../Components/BookPreview';
 import Footer from '../../Components/Footer';
 import { useCart } from "../../Components/CartContext";
+import { FaCheck, FaTimes } from "react-icons/fa"; // added remove icon
 
 function Books() {
   const { bookId } = useParams();
-  const { addToCart, cart } = useCart();
+  const { addToCart, removeFromCart, cart } = useCart();
+
 
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
@@ -50,9 +52,12 @@ function Books() {
     : false;
 
   // ✅ Add to cart handler
-  const handleAddToCart = () => {
-    if (!selectedBook || isInCart) return;
+  const handleCartToggle = () => {
+  if (!selectedBook) return;
 
+  if (isInCart) {
+    removeFromCart(selectedBook.id); // remove if already in cart
+  } else {
     addToCart({
       id: selectedBook.id,
       title: selectedBook.title,
@@ -61,7 +66,9 @@ function Books() {
       bookFileUrl: selectedBook.bookFileUrl,
       format: selectedBook.format,
     });
-  };
+  }
+};
+
 
   return (
     <span>
@@ -87,14 +94,7 @@ function Books() {
                     {!selectedBook.frontCover && <p>{selectedBook.title}</p>}
                   </div>
 
-                  {/* ✅ ADD TO CART BUTTON */}
-                  <button
-                    onClick={handleAddToCart}
-                    disabled={isInCart}
-                    className="add-to-cart-btn"
-                  >
-                    {isInCart ? "Added ✓" : "Add to Cart"}
-                  </button>
+                  
 
                   <div
                     id='description-overlay'
@@ -150,6 +150,31 @@ function Books() {
             ) : (
               <p className="empty-message">No books available</p>
             )}
+
+
+            {/* ✅ ADD TO CART BUTTON */}
+
+            <div 
+              style={{
+                display:'flex',
+                alignItems:'center',
+                justifyContent:'center',
+                width:'100%',
+                }}>
+              <button
+                onClick={handleCartToggle}
+                className={`add-to-cart-btn ${isInCart ? "added" : ""}`}
+              >
+                {isInCart ? (
+                    <>
+                      <FaCheck style={{ marginRight: "6px" }} /> In Cart
+                    </>
+                  ) : (
+                    "Add to Cart"
+                  )
+                }
+              </button>
+            </div>
           </div>
 
           <div id='booklists'>
