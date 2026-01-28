@@ -5,6 +5,8 @@ import { useState } from 'react';
 
 import Logo from '../assets/Waytivities-Logo/logo.png';
 import { useAuth } from '../Components/AuthContext';
+import { useCart } from "../Components/CartContext";
+
 
 import { FaCartShopping } from "react-icons/fa6";
 
@@ -16,6 +18,9 @@ function Navbar() {
     const closeMenu = () => setIsMenuOpen(false);
 
     const { user, logout } = useAuth();
+
+    const { cart } = useCart();
+
 
     const handleLogout = async () => {
         try {
@@ -118,13 +123,17 @@ function Navbar() {
 
                     <div id="navs">
                         <NavLink to='/cart' activeclassname="active" onClick={closeMenu}>
-                        <span style={{display:'flex', alignItems:'center'}}>
-                            <p>Cart</p> {/* <FaCartShopping style={{marginLeft:'5px'}} /> */}
-                        </span>
-                        
+                            <span className="cart-link">
+                                <p>Cart</p>
+                                <FaCartShopping style={{ marginLeft: "6px" }} />
 
-                        <hr id='tab-hr'/>
+                                {cart.length > 0 && (
+                                <span className="cart-badge">{cart.length}</span>
+                                )}
+                            </span>
+                            <hr id='tab-hr'/>
                         </NavLink>
+
                     </div>
 
                     {user && (
