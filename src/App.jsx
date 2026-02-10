@@ -20,6 +20,7 @@ import Terms from './Pages/Terms/Terms';
 import ProtectedRoute from "./Components/ProtectedRoute";
 import UserLibrary from './Pages/UserLibrary/UserLibrary';
 import ReaderPage from './Pages/ReaderPage/ReaderPage';
+import Profile from './Pages/Profile/Profile';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
                 />
 
                 <Route path="/reader" element={<ReaderPage />} />
+                <Route path="/profile" element={<Profile />} />
 
 
 
