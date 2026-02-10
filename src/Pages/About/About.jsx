@@ -18,8 +18,15 @@ function About () {
                 <div id='aboutus-right'>
                     
                     <div id='aboutus'>
-                        <p>This is the About us page.</p>
-                        <p>Waytivities is a platform dedicated to connecting individuals through shared activities and interests. Our mission is to foster meaningful connections and create memorable experiences by bringing people together in a fun and engaging way. Whether you're looking to join a local hiking group, find a cooking class, or participate in community events, Waytivities is here to help you discover new opportunities and make lasting friendships. Join us today and start exploring the world of activities waiting for you!</p>
+                        
+                        <p>
+                            Terra incognito is a community of people with one pulsating desire- To please the lord!
+                            We believe that God (the creator) has one purpose- To be seen! <br/>
+                            He has called us (over the years) from different kindred, race, tribe and family to be a platform in achieving this purpose. 
+                            We believe that His speakings and dealings can be seen in our lifestyle. <br/>
+                            God desires to be seen, and our vision is to be the canvas that makes it possible.
+
+                        </p>
                     
                     </div> 
 
